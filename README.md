@@ -2,11 +2,14 @@
 dbt-dimensional-modelling is a clone of https://github.com/Data-Engineer-Camp/dbt-dimensional-modelling.git
 
 
+# If script execution is disabled on the pc run this:
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
 # Create virtual environment
 python -m venv .venv
 
 # Activate it
-.\.venv\Scripts\Activate.ps1
+.\\.venv\Scripts\Activate.ps1
 
 # Upgrade pip
 python -m pip install --upgrade pip
@@ -16,10 +19,10 @@ python -m pip install -r requirements.txt
 
 # Check that dbt is working.
 cd dbt-dimensional-modelling\adventureworks\
-dbt deps
-mkdir target
-dbt debug
-dbt seed
+dbt deps\
+mkdir target\
+dbt debug\
+dbt seed\
 dbt run
 
 # check that duckdb cli is working

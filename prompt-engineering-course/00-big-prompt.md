@@ -58,14 +58,3 @@ new model and show me the result.
    forget to ask for it, or from an agent editing seed CSVs directly.
 4. There's no scoped persona - any chat participant could go off and refactor
    unrelated files while "helping" with the dimension.
-
-The following stages split this into four reusable pieces:
-
-| Piece | File | Solves |
-|---|---|---|
-| Stage 1 | [`.github/instructions/dbt-dimensional-modelling.instructions.md`](../.github/instructions/dbt-dimensional-modelling.instructions.md) | conventions repeated every time |
-| Stage 2 | [`.github/prompts/create-dimension.prompt.md`](../.github/prompts/create-dimension.prompt.md) | task buried in rules |
-| Stage 3 | [`.github/agents/dbt-modeler.agent.md`](../.github/agents/dbt-modeler.agent.md) | scope/persona/tool restriction |
-| Stage 4 | [`.github/hooks/dbt-marts-guard.json`](../.github/hooks/dbt-marts-guard.json) | enforcement instead of hope |
-
-See [README.md](./README.md) for the full walkthrough and the final "small prompt".
