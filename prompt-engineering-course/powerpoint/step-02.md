@@ -4,7 +4,7 @@ Create a short instructional slide deck for developers learning prompt engineeri
 
 ## Why This Change
 
-Make only the changing task values reusable in a prompt template. This prevents repeated convention text while making each dimension's seed, keys, and attributes explicit.
+Make changing task values explicit in a native VS Code prompt file. It appears in Agent Customizations and exposes fields for the model, seed, keys, and attributes, while the stable conventions remain in instructions.
 
 ## Slide Sequence
 
@@ -16,9 +16,9 @@ Make only the changing task values reusable in a prompt template. This prevents 
 
 ## Branches and Run Status
 
-Start: `Example-01-step-02-start` at `57cd5e24a29a845aa96a96b7fead31b89ef868f9`.
+Start: `Example-01-step-02-start` at `214570434e15b6c8ee7b2e65edff47d4b1b94866`.
 
-Solution: `Example-01-step-02-solution` at `e3c47ec095db85765816b858534c7332bbd1dd3d`.
+Solution: `Example-01-step-02-solution` at `bac1577648ddcd282d21cf5108ef223b741c16e3`.
 
 Run: `Example-01-step-02-run`, based on the solution. No prompt, skill, or dbt build has been executed. Its record is pending manual work. Expected task only: create dim_store from store with natural key businessentityid, surrogate key store_key, attributes storename and salespersonid, excluding modifieddate. This is not observed output.
 
@@ -33,8 +33,9 @@ No AdventureWorks project files were changed during preparation; no generated mo
 ## Learning Goal
 
 Keep stable rules in repository instructions while turning variable dimension
-details into explicit prompt inputs. A plain Markdown template is reusable text;
-it is not automatically a VS Code command.
+details into explicit inputs in a native VS Code prompt file. The prompt file
+appears in Agent Customizations and can be invoked separately from a workflow
+skill.
 
 ## Branches
 
@@ -44,12 +45,13 @@ it is not automatically a VS Code command.
 
 ## Assignment
 
-1. Create `prompt-engineering-course/prompts/create-dimension.md` with
-   placeholders for model, entity, seed, natural key, surrogate key, included
-   and excluded attributes, and a structural reference model.
+1. Create `.github/prompts/dimension-task.prompt.md` with prompt-file frontmatter
+   and `${input:name:placeholder}` fields for model, entity, seed, natural key,
+   surrogate key, included and excluded attributes, and a reference model.
+   Give it a slash name distinct from the step 03 skill.
 2. Refer to the step 01 instructions instead of copying their stable rules.
-3. Create this step's `prompt.md` by filling the template with the values below.
-   Change no other wording.
+3. Create this step's `prompt.md` with the prompt-file slash invocation and the
+   concrete values below, in the order requested by the input fields.
 4. Add a pending run record and a solution containing complete snapshots of all
    changed text files. Exclude the solution from its own snapshot.
 5. Do not submit the prompt or run dbt during preparation.
@@ -69,15 +71,16 @@ it is not automatically a VS Code command.
 
 ## Manual Run
 
-On the run branch, paste the concrete prompt into a fresh Copilot chat. Make sure
-the scoped instruction file is available, and record in References whether it was
-included. Capture the generated files, actual command, exit code, and full output
-in `run-result.md` after you perform the run.
+On the run branch, invoke the prompt file in a fresh VS Code Copilot chat and
+fill in each requested value. Make sure the scoped instruction file is available,
+and record in References whether it was included. Capture the generated files,
+actual command, exit code, and full output in `run-result.md` after you perform
+the run.
 
 ## Acceptance Checks
 
-- The reusable template contains placeholders, not the store-specific values.
-- The filled prompt matches the template after exact substitution.
+- The native prompt file appears in Agent Customizations and has input fields.
+- The concrete invocation supplies the store-specific values in the right order.
 - Stable conventions remain in the scoped instructions.
 - No generated model or passing build is claimed before execution.
 ```
@@ -86,18 +89,24 @@ in `run-result.md` after you perform the run.
 
 <!-- source: Example-01-step-02-solution|prompt-engineering-course/step-02/prompt.md -->
 ```text no-final-newline
-Follow the applicable instructions in
-`.github/instructions/adventureworks-dimensions.instructions.md`.
+# Step 02 Prompt Invocation
 
-Create `dim_store`, a dimension for `store`, in
-`dbt-dimensional-modelling/adventureworks` from the `store` seed.
-Use `businessentityid` as the natural key and `store_key` as the
-surrogate key. Include these descriptive attributes: storename, salespersonid.
-Exclude these seed attributes: modifieddate.
+In a VS Code Copilot chat, invoke `/dimension-task`. The workspace prompt file
+will ask for these task inputs:
 
-Use `dim_customer.sql` and `dim_customer.yml` as structural
-references. Create the model SQL and YAML, validate the requested model, and
-show the result.
+| Input | Value |
+|---|---|
+| `model_name` | `dim_store` |
+| `entity` | `store` |
+| `seed` | `store` |
+| `natural_key` | `businessentityid` |
+| `surrogate_key` | `store_key` |
+| `included_attributes` | `storename, salespersonid` |
+| `excluded_attributes` | `modifieddate` |
+| `reference_model` | `dim_customer` |
+
+The prompt file is `.github/prompts/dimension-task.prompt.md`; its referenced
+instructions contain the stable project conventions.
 ```
 
 ## Full Source: prompt-engineering-course/step-02/run-result.md
@@ -113,16 +122,17 @@ prompt, or dbt command has been run; no model files or build output are recorded
 
 - Run branch: `Example-01-step-02-run`.
 - Source: `Example-01-step-02-solution`.
-- Concrete prompt: `prompt-engineering-course/step-02/prompt.md`.
-- Reusable template: `prompt-engineering-course/prompts/create-dimension.md`.
+- Invocation record: `prompt-engineering-course/step-02/prompt.md`.
+- VS Code prompt file: `.github/prompts/dimension-task.prompt.md`.
 - Applicable instructions: `.github/instructions/adventureworks-dimensions.instructions.md`.
 
 ## Manual Evidence
 
-Use a fresh Copilot chat on this run branch. Submit the concrete prompt, not the
-unfilled template. Check the response's References for the instruction file and
-record whether it was included. References establish inclusion, not compliance;
-check the generated SQL/YAML against the rules.
+Use a fresh VS Code Copilot chat on this run branch. Type `/dimension-task` and
+fill in the eight inputs listed in `prompt.md`. Confirm that the prompt file is
+available in Agent Customizations. Check the response's References for the
+instruction file and record whether it was included. References establish
+inclusion, not compliance; check the generated SQL/YAML against the rules.
 
 Record the prompt and context, complete assistant response and generated files,
 the actual dbt build command, exit code, and full output. Include failures,
@@ -130,25 +140,33 @@ fixes, and reruns. Resolve seed/package prerequisites explicitly; do not reset
 the database or edit the seed as part of this exercise.
 
 This run is pending. Keep its generated models and evidence off later start and
-solution branches.
+solution branches. Do not confuse this prompt-file invocation with the separate
+`/create-dimension` workflow skill introduced in step 03.
 ```
 
-## Full Source: prompt-engineering-course/prompts/create-dimension.md
+## Full Source: .github/prompts/dimension-task.prompt.md
 
-<!-- source: Example-01-step-02-solution|prompt-engineering-course/prompts/create-dimension.md -->
+<!-- source: Example-01-step-02-solution|.github/prompts/dimension-task.prompt.md -->
 ```text no-final-newline
-Follow the applicable instructions in
-`.github/instructions/adventureworks-dimensions.instructions.md`.
+---
+name: dimension-task
+description: Build a dbt dimension from a seed using supplied task inputs and the repository's scoped dimension instructions.
+argument-hint: "model, entity, seed, keys, attributes, reference model"
+agent: agent
+---
 
-Create `<<model>>`, a dimension for `<<entity>>`, in
-`dbt-dimensional-modelling/adventureworks` from the `<<seed>>` seed.
-Use `<<natural_key>>` as the natural key and `<<surrogate_key>>` as the
-surrogate key. Include these descriptive attributes: <<included_attributes>>.
-Exclude these seed attributes: <<excluded_attributes>>.
+Follow the [AdventureWorks dimension instructions](../instructions/adventureworks-dimensions.instructions.md).
 
-Use `<<reference_model>>.sql` and `<<reference_model>>.yml` as structural
-references. Create the model SQL and YAML, validate the requested model, and
-show the result.
+Create `${input:model_name:dim_store}`, a dimension for
+`${input:entity:store}`, in `dbt-dimensional-modelling/adventureworks` from the
+`${input:seed:store}` seed. Use `${input:natural_key:businessentityid}` as the
+natural key and `${input:surrogate_key:store_key}` as the surrogate key.
+Include these descriptive attributes: `${input:included_attributes:storename, salespersonid}`.
+Exclude these seed attributes: `${input:excluded_attributes:modifieddate}`.
+
+Use `${input:reference_model:dim_customer}` as the structural reference for
+both the SQL and YAML. Create the model files, validate the requested model,
+and show the result.
 ```
 
 ## Full Source: prompt-engineering-course/step-02/solution.md
@@ -170,8 +188,9 @@ The following blocks are complete verbatim copies of every changed text payload 
 ## Learning Goal
 
 Keep stable rules in repository instructions while turning variable dimension
-details into explicit prompt inputs. A plain Markdown template is reusable text;
-it is not automatically a VS Code command.
+details into explicit inputs in a native VS Code prompt file. The prompt file
+appears in Agent Customizations and can be invoked separately from a workflow
+skill.
 
 ## Branches
 
@@ -181,12 +200,13 @@ it is not automatically a VS Code command.
 
 ## Assignment
 
-1. Create `prompt-engineering-course/prompts/create-dimension.md` with
-   placeholders for model, entity, seed, natural key, surrogate key, included
-   and excluded attributes, and a structural reference model.
+1. Create `.github/prompts/dimension-task.prompt.md` with prompt-file frontmatter
+   and `${input:name:placeholder}` fields for model, entity, seed, natural key,
+   surrogate key, included and excluded attributes, and a reference model.
+   Give it a slash name distinct from the step 03 skill.
 2. Refer to the step 01 instructions instead of copying their stable rules.
-3. Create this step's `prompt.md` by filling the template with the values below.
-   Change no other wording.
+3. Create this step's `prompt.md` with the prompt-file slash invocation and the
+   concrete values below, in the order requested by the input fields.
 4. Add a pending run record and a solution containing complete snapshots of all
    changed text files. Exclude the solution from its own snapshot.
 5. Do not submit the prompt or run dbt during preparation.
@@ -206,15 +226,16 @@ it is not automatically a VS Code command.
 
 ## Manual Run
 
-On the run branch, paste the concrete prompt into a fresh Copilot chat. Make sure
-the scoped instruction file is available, and record in References whether it was
-included. Capture the generated files, actual command, exit code, and full output
-in `run-result.md` after you perform the run.
+On the run branch, invoke the prompt file in a fresh VS Code Copilot chat and
+fill in each requested value. Make sure the scoped instruction file is available,
+and record in References whether it was included. Capture the generated files,
+actual command, exit code, and full output in `run-result.md` after you perform
+the run.
 
 ## Acceptance Checks
 
-- The reusable template contains placeholders, not the store-specific values.
-- The filled prompt matches the template after exact substitution.
+- The native prompt file appears in Agent Customizations and has input fields.
+- The concrete invocation supplies the store-specific values in the right order.
 - Stable conventions remain in the scoped instructions.
 - No generated model or passing build is claimed before execution.
 ```
@@ -223,18 +244,24 @@ in `run-result.md` after you perform the run.
 
 <!-- file: prompt-engineering-course/step-02/prompt.md -->
 ```text no-final-newline
-Follow the applicable instructions in
-`.github/instructions/adventureworks-dimensions.instructions.md`.
+# Step 02 Prompt Invocation
 
-Create `dim_store`, a dimension for `store`, in
-`dbt-dimensional-modelling/adventureworks` from the `store` seed.
-Use `businessentityid` as the natural key and `store_key` as the
-surrogate key. Include these descriptive attributes: storename, salespersonid.
-Exclude these seed attributes: modifieddate.
+In a VS Code Copilot chat, invoke `/dimension-task`. The workspace prompt file
+will ask for these task inputs:
 
-Use `dim_customer.sql` and `dim_customer.yml` as structural
-references. Create the model SQL and YAML, validate the requested model, and
-show the result.
+| Input | Value |
+|---|---|
+| `model_name` | `dim_store` |
+| `entity` | `store` |
+| `seed` | `store` |
+| `natural_key` | `businessentityid` |
+| `surrogate_key` | `store_key` |
+| `included_attributes` | `storename, salespersonid` |
+| `excluded_attributes` | `modifieddate` |
+| `reference_model` | `dim_customer` |
+
+The prompt file is `.github/prompts/dimension-task.prompt.md`; its referenced
+instructions contain the stable project conventions.
 ```
 
 ## prompt-engineering-course/step-02/run-result.md
@@ -250,16 +277,17 @@ prompt, or dbt command has been run; no model files or build output are recorded
 
 - Run branch: `Example-01-step-02-run`.
 - Source: `Example-01-step-02-solution`.
-- Concrete prompt: `prompt-engineering-course/step-02/prompt.md`.
-- Reusable template: `prompt-engineering-course/prompts/create-dimension.md`.
+- Invocation record: `prompt-engineering-course/step-02/prompt.md`.
+- VS Code prompt file: `.github/prompts/dimension-task.prompt.md`.
 - Applicable instructions: `.github/instructions/adventureworks-dimensions.instructions.md`.
 
 ## Manual Evidence
 
-Use a fresh Copilot chat on this run branch. Submit the concrete prompt, not the
-unfilled template. Check the response's References for the instruction file and
-record whether it was included. References establish inclusion, not compliance;
-check the generated SQL/YAML against the rules.
+Use a fresh VS Code Copilot chat on this run branch. Type `/dimension-task` and
+fill in the eight inputs listed in `prompt.md`. Confirm that the prompt file is
+available in Agent Customizations. Check the response's References for the
+instruction file and record whether it was included. References establish
+inclusion, not compliance; check the generated SQL/YAML against the rules.
 
 Record the prompt and context, complete assistant response and generated files,
 the actual dbt build command, exit code, and full output. Include failures,
@@ -267,25 +295,33 @@ fixes, and reruns. Resolve seed/package prerequisites explicitly; do not reset
 the database or edit the seed as part of this exercise.
 
 This run is pending. Keep its generated models and evidence off later start and
-solution branches.
+solution branches. Do not confuse this prompt-file invocation with the separate
+`/create-dimension` workflow skill introduced in step 03.
 ```
 
-## prompt-engineering-course/prompts/create-dimension.md
+## .github/prompts/dimension-task.prompt.md
 
-<!-- file: prompt-engineering-course/prompts/create-dimension.md -->
+<!-- file: .github/prompts/dimension-task.prompt.md -->
 ```text no-final-newline
-Follow the applicable instructions in
-`.github/instructions/adventureworks-dimensions.instructions.md`.
+---
+name: dimension-task
+description: Build a dbt dimension from a seed using supplied task inputs and the repository's scoped dimension instructions.
+argument-hint: "model, entity, seed, keys, attributes, reference model"
+agent: agent
+---
 
-Create `<<model>>`, a dimension for `<<entity>>`, in
-`dbt-dimensional-modelling/adventureworks` from the `<<seed>>` seed.
-Use `<<natural_key>>` as the natural key and `<<surrogate_key>>` as the
-surrogate key. Include these descriptive attributes: <<included_attributes>>.
-Exclude these seed attributes: <<excluded_attributes>>.
+Follow the [AdventureWorks dimension instructions](../instructions/adventureworks-dimensions.instructions.md).
 
-Use `<<reference_model>>.sql` and `<<reference_model>>.yml` as structural
-references. Create the model SQL and YAML, validate the requested model, and
-show the result.
+Create `${input:model_name:dim_store}`, a dimension for
+`${input:entity:store}`, in `dbt-dimensional-modelling/adventureworks` from the
+`${input:seed:store}` seed. Use `${input:natural_key:businessentityid}` as the
+natural key and `${input:surrogate_key:store_key}` as the surrogate key.
+Include these descriptive attributes: `${input:included_attributes:storename, salespersonid}`.
+Exclude these seed attributes: `${input:excluded_attributes:modifieddate}`.
+
+Use `${input:reference_model:dim_customer}` as the structural reference for
+both the SQL and YAML. Create the model files, validate the requested model,
+and show the result.
 ```
 
 ````
