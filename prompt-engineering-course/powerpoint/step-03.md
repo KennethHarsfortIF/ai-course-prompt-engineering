@@ -4,7 +4,7 @@ Create a short instructional slide deck for developers learning prompt engineeri
 
 ## Why This Change
 
-Package the repeatable dimension-creation procedure as a skill. Explicit slash invocation demonstrates workflow reuse, while the skill composes the existing instructions and template instead of duplicating them.
+Package the repeatable dimension-creation procedure as a skill. Explicit slash invocation demonstrates workflow reuse, while the skill composes the existing instructions and native prompt-file input schema instead of duplicating them.
 
 ## Slide Sequence
 
@@ -16,9 +16,9 @@ Package the repeatable dimension-creation procedure as a skill. Explicit slash i
 
 ## Branches and Run Status
 
-Start: `Example-01-step-03-start` at `d77e7f138183a6414a437cee64f0c263536b8026`.
+Start: `Example-01-step-03-start` at `79f18e9f6930f07ada5703df8593ef37b029cf92`.
 
-Solution: `Example-01-step-03-solution` at `237b1d573fc1a7cad3031400ad050d8f9f12091d`.
+Solution: `Example-01-step-03-solution` at `3f51fa6ba707dc34d237cef5530ff11c986dd1d7`.
 
 Run: `Example-01-step-03-run`, based on the solution. No prompt, skill, or dbt build has been executed. Its record is pending manual work. Expected task only: create dim_store from store with natural key businessentityid, surrogate key store_key, attributes storename and salespersonid, excluding modifieddate. This is not observed output.
 
@@ -33,8 +33,8 @@ No AdventureWorks project files were changed during preparation; no generated mo
 ## Learning Goal
 
 Combine the earlier pieces into a repeatable workflow. Instructions hold project
-rules, a template holds dimension-specific inputs, and an Agent Skill guides the
-procedure for carrying out the task.
+rules, a native VS Code prompt file holds dimension-specific inputs, and an Agent
+Skill guides the procedure for carrying out the task.
 
 ## Branches
 
@@ -49,8 +49,10 @@ procedure for carrying out the task.
    `create-dimension`.
 2. Make it an explicit slash command, and disable automatic model invocation so
    the exercise can demonstrate a deliberate `/create-dimension` invocation.
-3. Have the skill reference the existing dimension instructions and reusable
-   task template. Do not duplicate their stable conventions or task wording.
+3. Have the skill reference the existing dimension instructions and the native
+   prompt file `.github/prompts/dimension-task.prompt.md`. Do not duplicate their
+   stable conventions or task wording. Explain that `/dimension-task` runs the
+   prompt file while `/create-dimension` runs the workflow skill.
 4. Create `prompt.md` with the exact slash invocation and task inputs for
    `dim_store`; add a pending run record and complete solution snapshots.
 5. Do not invoke the skill or execute a dbt build during preparation.
@@ -63,15 +65,16 @@ or screenshot showing the explicit command; if the response lists the skill in
 References, record that too. The slash invocation demonstrates selection, while
 References provide additional evidence that the skill was included.
 
-Inspect which instruction file and template the skill used, review the generated
-SQL/YAML, and record actual validation results. Do not claim that discovery or
-invocation guarantees compliance or a successful build.
+Inspect which instruction file and prompt file the skill used, review the
+generated SQL/YAML, and record actual validation results. Do not claim that
+discovery or invocation guarantees compliance or a successful build.
 
 ## Acceptance Checks
 
 - Skill frontmatter has a valid matching name and is user-invocable.
 - Manual slash invocation is required; automatic skill discovery is disabled.
-- The skill composes earlier instructions and template instead of copying them.
+- The skill composes earlier instructions and prompt file instead of copying them.
+- The prompt-file command and skill command have distinct names and roles.
 - No skill run, model output, or build result is fabricated.
 ```
 
@@ -83,7 +86,9 @@ invocation guarantees compliance or a successful build.
 `dbt-dimensional-modelling/adventureworks`. Use `businessentityid` as the
 natural key and `store_key` as the surrogate key. Include `storename` and
 `salespersonid`; exclude `modifieddate`. Use `dim_customer` as the structural
-reference.
+reference. The skill uses the input structure in
+`.github/prompts/dimension-task.prompt.md`; that separate prompt file can also
+be invoked directly as `/dimension-task`.
 ```
 
 ## Full Source: prompt-engineering-course/step-03/run-result.md
@@ -101,8 +106,8 @@ assistant response, dbt command, exit code, or build result is recorded.
 - Source: `Example-01-step-03-solution`.
 - Exact invocation: `prompt-engineering-course/step-03/prompt.md`.
 - Skill: `.github/skills/create-dimension/SKILL.md`.
+- Native task prompt: `.github/prompts/dimension-task.prompt.md`.
 - Instructions: `.github/instructions/adventureworks-dimensions.instructions.md`.
-- Template: `prompt-engineering-course/prompts/create-dimension.md`.
 
 ## Manual Skill Evidence
 
@@ -113,9 +118,11 @@ References, record those references; distinguish discovery, explicit
 invocation, inclusion, and behavioral compliance rather than treating them as
 the same proof.
 
-Review whether the skill read and followed the scoped instructions and filled
-the reusable template with the requested values. Check the generated SQL/YAML
-against the output columns and schema requirements.
+Review whether the skill read and followed the scoped instructions and used the
+native prompt file's input structure. Check the generated SQL/YAML against the
+output columns and schema requirements. Compare `/create-dimension` (workflow)
+with `/dimension-task` (single reusable prompt) without treating them as the
+same customization.
 
 ## Validation Evidence
 
@@ -150,11 +157,14 @@ and record the slash command.
 
 - Read the [AdventureWorks dimension instructions](../../instructions/adventureworks-dimensions.instructions.md)
   for stable model and validation conventions.
-- Read the [dimension task template](../../../prompt-engineering-course/prompts/create-dimension.md)
-  for the task request structure.
+- Read the [dimension task prompt file](../../prompts/dimension-task.prompt.md)
+   for the task request structure and input fields.
 
-Do not copy the full instruction list or template text into a second reusable
-source. Resolve their relative paths from this skill directory.
+Do not copy the full instruction list or prompt text into a second reusable
+source. Resolve resource paths relative to this skill directory. The prompt file
+uses VS Code `${input:...}` variables when invoked directly as `/dimension-task`;
+when this skill is invoked, collect concrete values from the user's request and
+never send unresolved input tokens as if they were task values.
 
 ## Workflow
 
@@ -163,8 +173,10 @@ source. Resolve their relative paths from this skill directory.
    Ask concise questions for any missing values; do not guess.
 2. Confirm the task is in `dbt-dimensional-modelling/adventureworks` and that
    the requested model files do not contain unrelated user work.
-3. Fill every placeholder in the task template with the supplied values. Keep
-   the instruction reference intact and do not leave unresolved placeholders.
+3. Use the prompt file's input fields to structure the task request. When the
+   skill invocation includes concrete values, apply them directly; ask for any
+   missing values. Keep the instruction reference intact and do not leave
+   unresolved input tokens in the prompt sent for implementation.
 4. Implement only the requested dimension SQL and its companion schema YAML.
    Do not edit seed data, other dimensions, facts, profiles, package versions,
    schema macros, or unrelated files. Preserve existing user changes.
@@ -202,8 +214,8 @@ The following blocks are complete verbatim copies of every changed text payload 
 ## Learning Goal
 
 Combine the earlier pieces into a repeatable workflow. Instructions hold project
-rules, a template holds dimension-specific inputs, and an Agent Skill guides the
-procedure for carrying out the task.
+rules, a native VS Code prompt file holds dimension-specific inputs, and an Agent
+Skill guides the procedure for carrying out the task.
 
 ## Branches
 
@@ -218,8 +230,10 @@ procedure for carrying out the task.
    `create-dimension`.
 2. Make it an explicit slash command, and disable automatic model invocation so
    the exercise can demonstrate a deliberate `/create-dimension` invocation.
-3. Have the skill reference the existing dimension instructions and reusable
-   task template. Do not duplicate their stable conventions or task wording.
+3. Have the skill reference the existing dimension instructions and the native
+   prompt file `.github/prompts/dimension-task.prompt.md`. Do not duplicate their
+   stable conventions or task wording. Explain that `/dimension-task` runs the
+   prompt file while `/create-dimension` runs the workflow skill.
 4. Create `prompt.md` with the exact slash invocation and task inputs for
    `dim_store`; add a pending run record and complete solution snapshots.
 5. Do not invoke the skill or execute a dbt build during preparation.
@@ -232,15 +246,16 @@ or screenshot showing the explicit command; if the response lists the skill in
 References, record that too. The slash invocation demonstrates selection, while
 References provide additional evidence that the skill was included.
 
-Inspect which instruction file and template the skill used, review the generated
-SQL/YAML, and record actual validation results. Do not claim that discovery or
-invocation guarantees compliance or a successful build.
+Inspect which instruction file and prompt file the skill used, review the
+generated SQL/YAML, and record actual validation results. Do not claim that
+discovery or invocation guarantees compliance or a successful build.
 
 ## Acceptance Checks
 
 - Skill frontmatter has a valid matching name and is user-invocable.
 - Manual slash invocation is required; automatic skill discovery is disabled.
-- The skill composes earlier instructions and template instead of copying them.
+- The skill composes earlier instructions and prompt file instead of copying them.
+- The prompt-file command and skill command have distinct names and roles.
 - No skill run, model output, or build result is fabricated.
 ```
 
@@ -252,7 +267,9 @@ invocation guarantees compliance or a successful build.
 `dbt-dimensional-modelling/adventureworks`. Use `businessentityid` as the
 natural key and `store_key` as the surrogate key. Include `storename` and
 `salespersonid`; exclude `modifieddate`. Use `dim_customer` as the structural
-reference.
+reference. The skill uses the input structure in
+`.github/prompts/dimension-task.prompt.md`; that separate prompt file can also
+be invoked directly as `/dimension-task`.
 ```
 
 ## prompt-engineering-course/step-03/run-result.md
@@ -270,8 +287,8 @@ assistant response, dbt command, exit code, or build result is recorded.
 - Source: `Example-01-step-03-solution`.
 - Exact invocation: `prompt-engineering-course/step-03/prompt.md`.
 - Skill: `.github/skills/create-dimension/SKILL.md`.
+- Native task prompt: `.github/prompts/dimension-task.prompt.md`.
 - Instructions: `.github/instructions/adventureworks-dimensions.instructions.md`.
-- Template: `prompt-engineering-course/prompts/create-dimension.md`.
 
 ## Manual Skill Evidence
 
@@ -282,9 +299,11 @@ References, record those references; distinguish discovery, explicit
 invocation, inclusion, and behavioral compliance rather than treating them as
 the same proof.
 
-Review whether the skill read and followed the scoped instructions and filled
-the reusable template with the requested values. Check the generated SQL/YAML
-against the output columns and schema requirements.
+Review whether the skill read and followed the scoped instructions and used the
+native prompt file's input structure. Check the generated SQL/YAML against the
+output columns and schema requirements. Compare `/create-dimension` (workflow)
+with `/dimension-task` (single reusable prompt) without treating them as the
+same customization.
 
 ## Validation Evidence
 
@@ -319,11 +338,14 @@ and record the slash command.
 
 - Read the [AdventureWorks dimension instructions](../../instructions/adventureworks-dimensions.instructions.md)
   for stable model and validation conventions.
-- Read the [dimension task template](../../../prompt-engineering-course/prompts/create-dimension.md)
-  for the task request structure.
+- Read the [dimension task prompt file](../../prompts/dimension-task.prompt.md)
+   for the task request structure and input fields.
 
-Do not copy the full instruction list or template text into a second reusable
-source. Resolve their relative paths from this skill directory.
+Do not copy the full instruction list or prompt text into a second reusable
+source. Resolve resource paths relative to this skill directory. The prompt file
+uses VS Code `${input:...}` variables when invoked directly as `/dimension-task`;
+when this skill is invoked, collect concrete values from the user's request and
+never send unresolved input tokens as if they were task values.
 
 ## Workflow
 
@@ -332,8 +354,10 @@ source. Resolve their relative paths from this skill directory.
    Ask concise questions for any missing values; do not guess.
 2. Confirm the task is in `dbt-dimensional-modelling/adventureworks` and that
    the requested model files do not contain unrelated user work.
-3. Fill every placeholder in the task template with the supplied values. Keep
-   the instruction reference intact and do not leave unresolved placeholders.
+3. Use the prompt file's input fields to structure the task request. When the
+   skill invocation includes concrete values, apply them directly; ask for any
+   missing values. Keep the instruction reference intact and do not leave
+   unresolved input tokens in the prompt sent for implementation.
 4. Implement only the requested dimension SQL and its companion schema YAML.
    Do not edit seed data, other dimensions, facts, profiles, package versions,
    schema macros, or unrelated files. Preserve existing user changes.
