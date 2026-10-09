@@ -9,8 +9,8 @@ prompt reuse:
 |---|---|---|
 | 00 | One big prompt | Project conventions and the particular task are mixed together. |
 | 01 | Scoped instructions | Stable dimension conventions attach to matching model files. |
-| 02 | Prompt template | Variable dimension inputs are filled in for each task. |
-| 03 | Agent Skill | A slash-invoked workflow composes the instructions and template. |
+| 02 | Prompt file | A native VS Code prompt exposes task inputs and can be invoked directly. |
+| 03 | Agent Skill | A slash-invoked workflow composes the instructions and prompt file. |
 
 The task throughout is to create `dim_store` from the `store` seed. No model is
 generated during course preparation; run branches are intentionally left for
@@ -22,13 +22,13 @@ the learner.
 .github/
   instructions/adventureworks-dimensions.instructions.md
   skills/create-dimension/SKILL.md
+  prompts/dimension-task.prompt.md
 prompt-engineering-course/
   00-big-prompt.md                         # original baseline; unchanged
   step-00/{exercise,prompt,solution,run-result}.md
   step-01/{exercise,prompt,solution,run-result}.md
   step-02/{exercise,prompt,solution,run-result}.md
   step-03/{exercise,prompt,solution,run-result}.md
-  prompts/create-dimension.md              # reusable plain Markdown template
   powerpoint/                              # separate presentation branch content
 ```
 
@@ -66,12 +66,15 @@ presentation inputs, committed separately from the course exercise branches.
 - **Instructions:** `.github/instructions/adventureworks-dimensions.instructions.md`
   defines durable dimension conventions and narrows automatic inclusion to
   matching SQL/YAML files. A References entry shows inclusion, not compliance.
-- **Template:** `prompt-engineering-course/prompts/create-dimension.md` holds
-  changing task inputs. It is plain Markdown, not itself a slash command.
+- **Prompt file:** `.github/prompts/dimension-task.prompt.md` holds changing task
+  inputs as VS Code `${input:...}` variables. In a compatible VS Code Copilot
+  harness, it appears in Agent Customizations and runs as `/dimension-task`.
 - **Skill:** `.github/skills/create-dimension/SKILL.md` is a project skill.
   It is user-invocable and model auto-invocation is disabled so the learner can
-  demonstrate `/create-dimension` explicitly. The skill references the earlier
-  instruction and template artifacts rather than duplicating them.
+  demonstrate `/create-dimension` explicitly. The skill references the
+  instructions and prompt-file input schema rather than duplicating them.
+  `/dimension-task` runs the reusable prompt; `/create-dimension` runs the
+  multi-step workflow.
 
 ## Slide Input Files
 
@@ -90,7 +93,8 @@ conversion differences. Do not invent model output or successful build results.
 ## Manual Run Boundary
 
 Only on the corresponding run branch, the learner opens a fresh Copilot chat
-and uses that step's exact prompt. For step 03, invoke `/create-dimension`.
+and uses that step's exact prompt. For step 02, invoke `/dimension-task` and
+provide its requested values. For step 03, invoke `/create-dimension`.
 Capture the response, generated SQL/YAML, actual validation command, exit code,
 and full output in that step's run record. For step 01, check References to see
 whether the instruction file was included. For step 03, distinguish the explicit
