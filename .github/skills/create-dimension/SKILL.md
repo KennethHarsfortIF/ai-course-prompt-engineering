@@ -16,11 +16,14 @@ and record the slash command.
 
 - Read the [AdventureWorks dimension instructions](../../instructions/adventureworks-dimensions.instructions.md)
   for stable model and validation conventions.
-- Read the [dimension task template](../../../prompt-engineering-course/prompts/create-dimension.md)
-  for the task request structure.
+- Read the [dimension task prompt file](../../prompts/dimension-task.prompt.md)
+   for the task request structure and input fields.
 
-Do not copy the full instruction list or template text into a second reusable
-source. Resolve their relative paths from this skill directory.
+Do not copy the full instruction list or prompt text into a second reusable
+source. Resolve resource paths relative to this skill directory. The prompt file
+uses VS Code `${input:...}` variables when invoked directly as `/dimension-task`;
+when this skill is invoked, collect concrete values from the user's request and
+never send unresolved input tokens as if they were task values.
 
 ## Workflow
 
@@ -29,8 +32,10 @@ source. Resolve their relative paths from this skill directory.
    Ask concise questions for any missing values; do not guess.
 2. Confirm the task is in `dbt-dimensional-modelling/adventureworks` and that
    the requested model files do not contain unrelated user work.
-3. Fill every placeholder in the task template with the supplied values. Keep
-   the instruction reference intact and do not leave unresolved placeholders.
+3. Use the prompt file's input fields to structure the task request. When the
+   skill invocation includes concrete values, apply them directly; ask for any
+   missing values. Keep the instruction reference intact and do not leave
+   unresolved input tokens in the prompt sent for implementation.
 4. Implement only the requested dimension SQL and its companion schema YAML.
    Do not edit seed data, other dimensions, facts, profiles, package versions,
    schema macros, or unrelated files. Preserve existing user changes.

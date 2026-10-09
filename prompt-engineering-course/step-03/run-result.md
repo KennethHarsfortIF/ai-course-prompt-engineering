@@ -9,8 +9,8 @@ assistant response, dbt command, exit code, or build result is recorded.
 - Source: `Example-01-step-03-solution`.
 - Exact invocation: `prompt-engineering-course/step-03/prompt.md`.
 - Skill: `.github/skills/create-dimension/SKILL.md`.
+- Native task prompt: `.github/prompts/dimension-task.prompt.md`.
 - Instructions: `.github/instructions/adventureworks-dimensions.instructions.md`.
-- Template: `prompt-engineering-course/prompts/create-dimension.md`.
 
 ## Manual Skill Evidence
 
@@ -21,9 +21,11 @@ References, record those references; distinguish discovery, explicit
 invocation, inclusion, and behavioral compliance rather than treating them as
 the same proof.
 
-Review whether the skill read and followed the scoped instructions and filled
-the reusable template with the requested values. Check the generated SQL/YAML
-against the output columns and schema requirements.
+Review whether the skill read and followed the scoped instructions and used the
+native prompt file's input structure. Check the generated SQL/YAML against the
+output columns and schema requirements. Compare `/create-dimension` (workflow)
+with `/dimension-task` (single reusable prompt) without treating them as the
+same customization.
 
 ## Validation Evidence
 
