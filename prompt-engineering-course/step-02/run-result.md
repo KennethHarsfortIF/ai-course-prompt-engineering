@@ -7,16 +7,17 @@ prompt, or dbt command has been run; no model files or build output are recorded
 
 - Run branch: `Example-01-step-02-run`.
 - Source: `Example-01-step-02-solution`.
-- Concrete prompt: `prompt-engineering-course/step-02/prompt.md`.
-- Reusable template: `prompt-engineering-course/prompts/create-dimension.md`.
+- Invocation record: `prompt-engineering-course/step-02/prompt.md`.
+- VS Code prompt file: `.github/prompts/dimension-task.prompt.md`.
 - Applicable instructions: `.github/instructions/adventureworks-dimensions.instructions.md`.
 
 ## Manual Evidence
 
-Use a fresh Copilot chat on this run branch. Submit the concrete prompt, not the
-unfilled template. Check the response's References for the instruction file and
-record whether it was included. References establish inclusion, not compliance;
-check the generated SQL/YAML against the rules.
+Use a fresh VS Code Copilot chat on this run branch. Type `/dimension-task` and
+fill in the eight inputs listed in `prompt.md`. Confirm that the prompt file is
+available in Agent Customizations. Check the response's References for the
+instruction file and record whether it was included. References establish
+inclusion, not compliance; check the generated SQL/YAML against the rules.
 
 Record the prompt and context, complete assistant response and generated files,
 the actual dbt build command, exit code, and full output. Include failures,
@@ -24,4 +25,5 @@ fixes, and reruns. Resolve seed/package prerequisites explicitly; do not reset
 the database or edit the seed as part of this exercise.
 
 This run is pending. Keep its generated models and evidence off later start and
-solution branches.
+solution branches. Do not confuse this prompt-file invocation with the separate
+`/create-dimension` workflow skill introduced in step 03.

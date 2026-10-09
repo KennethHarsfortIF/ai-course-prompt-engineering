@@ -1,12 +1,18 @@
-Follow the applicable instructions in
-`.github/instructions/adventureworks-dimensions.instructions.md`.
+# Step 02 Prompt Invocation
 
-Create `dim_store`, a dimension for `store`, in
-`dbt-dimensional-modelling/adventureworks` from the `store` seed.
-Use `businessentityid` as the natural key and `store_key` as the
-surrogate key. Include these descriptive attributes: storename, salespersonid.
-Exclude these seed attributes: modifieddate.
+In a VS Code Copilot chat, invoke `/dimension-task`. The workspace prompt file
+will ask for these task inputs:
 
-Use `dim_customer.sql` and `dim_customer.yml` as structural
-references. Create the model SQL and YAML, validate the requested model, and
-show the result.
+| Input | Value |
+|---|---|
+| `model_name` | `dim_store` |
+| `entity` | `store` |
+| `seed` | `store` |
+| `natural_key` | `businessentityid` |
+| `surrogate_key` | `store_key` |
+| `included_attributes` | `storename, salespersonid` |
+| `excluded_attributes` | `modifieddate` |
+| `reference_model` | `dim_customer` |
+
+The prompt file is `.github/prompts/dimension-task.prompt.md`; its referenced
+instructions contain the stable project conventions.
