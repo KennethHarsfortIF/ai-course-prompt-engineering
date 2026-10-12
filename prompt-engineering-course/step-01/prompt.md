@@ -1,3 +1,7 @@
+I'm working in dbt-dimensional-modelling/adventureworks, a dbt project on DuckDB that
+implements a Kimball-style dimensional model for AdventureWorks (raw seeds in
+seeds/**, marts in models/marts/**).
+
 Create a `dim_store` dimension in `dbt-dimensional-modelling/adventureworks`
 from the `store` seed. Use `businessentityid` as the natural key and
 `store_key` as the surrogate key. Include `storename` and `salespersonid`; omit
