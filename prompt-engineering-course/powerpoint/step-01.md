@@ -4,7 +4,7 @@ Create a short instructional slide deck for developers learning prompt engineeri
 
 ## Why This Change
 
-Move stable, file-scoped modeling conventions into repository instructions. The task prompt stays focused on the requested dimension, and References can show whether the instructions were included.
+Move stable, file-scoped modeling conventions into repository instructions. Keep the concise project overview and requested dimension in the task prompt; References can show whether the instructions were included.
 
 ## Slide Sequence
 
@@ -18,9 +18,9 @@ Move stable, file-scoped modeling conventions into repository instructions. The 
 
 Start: `Example-01-step-01-start` at `fc372caae2740506492912f9c305ee5251252ed0`.
 
-Solution: `Example-01-step-01-solution` at `3e98837ef5ba491db72aab54157a9145a2a4e052`.
+Solution: `Example-01-step-01-solution` at `8159e79098f721307677f1d707272b531018c478`.
 
-Run: `Example-01-step-01-run`, based on the solution. No prompt, skill, or dbt build has been executed. Its record is pending manual work. Expected task only: create dim_store from store with natural key businessentityid, surrogate key store_key, attributes storename and salespersonid, excluding modifieddate. This is not observed output.
+Run: `Example-01-step-01-run` at `f9c9ec23a3f51773fad697604cc6f97824aa2ec3`. No prompt, skill, or dbt build has been executed. Its record is pending manual work. Expected task only: create dim_store from store with natural key businessentityid, surrogate key store_key, attributes storename and salespersonid, excluding modifieddate. This is not observed output.
 
 No AdventureWorks project files were changed during preparation; no generated models are included. Blocks below include the exact solution prompt and complete contents of every changed step file, plus the full solution snapshot. The solution snapshot excludes itself to prevent recursion.
 
@@ -77,6 +77,10 @@ evidence of automatic matching.
 
 <!-- source: Example-01-step-01-solution|prompt-engineering-course/step-01/prompt.md -->
 ```text no-final-newline
+I'm working in dbt-dimensional-modelling/adventureworks, a dbt project on DuckDB that
+implements a Kimball-style dimensional model for AdventureWorks (raw seeds in
+seeds/**, marts in models/marts/**).
+
 Create a `dim_store` dimension in `dbt-dimensional-modelling/adventureworks`
 from the `store` seed. Use `businessentityid` as the natural key and
 `store_key` as the surrogate key. Include `storename` and `salespersonid`; omit
@@ -247,6 +251,10 @@ evidence of automatic matching.
 
 <!-- file: prompt-engineering-course/step-01/prompt.md -->
 ```text no-final-newline
+I'm working in dbt-dimensional-modelling/adventureworks, a dbt project on DuckDB that
+implements a Kimball-style dimensional model for AdventureWorks (raw seeds in
+seeds/**, marts in models/marts/**).
+
 Create a `dim_store` dimension in `dbt-dimensional-modelling/adventureworks`
 from the `store` seed. Use `businessentityid` as the natural key and
 `store_key` as the surrogate key. Include `storename` and `salespersonid`; omit
