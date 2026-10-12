@@ -18,7 +18,7 @@ Move stable, file-scoped modeling conventions into repository instructions. The 
 
 Start: `Example-01-step-01-start` at `fc372caae2740506492912f9c305ee5251252ed0`.
 
-Solution: `Example-01-step-01-solution` at `eada1e3d1bd9f23084659541414a3372685a7221`.
+Solution: `Example-01-step-01-solution` at `3e98837ef5ba491db72aab54157a9145a2a4e052`.
 
 Run: `Example-01-step-01-run`, based on the solution. No prompt, skill, or dbt build has been executed. Its record is pending manual work. Expected task only: create dim_store from store with natural key businessentityid, surrogate key store_key, attributes storename and salespersonid, excluding modifieddate. This is not observed output.
 
@@ -134,9 +134,7 @@ files into later solution/start branches.
 ---
 name: AdventureWorks Dimensions
 description: Use when creating or changing AdventureWorks dbt dimension models and their schema YAML.
-applyTo:
-  - dbt-dimensional-modelling/adventureworks/models/marts/dim_*.sql
-  - dbt-dimensional-modelling/adventureworks/models/marts/dim_*.yml
+applyTo: "dbt-dimensional-modelling/adventureworks/models/marts/dim_*.sql, dbt-dimensional-modelling/adventureworks/models/marts/dim_*.yml"
 ---
 
 # AdventureWorks Dimension Conventions
@@ -306,9 +304,7 @@ files into later solution/start branches.
 ---
 name: AdventureWorks Dimensions
 description: Use when creating or changing AdventureWorks dbt dimension models and their schema YAML.
-applyTo:
-  - dbt-dimensional-modelling/adventureworks/models/marts/dim_*.sql
-  - dbt-dimensional-modelling/adventureworks/models/marts/dim_*.yml
+applyTo: "dbt-dimensional-modelling/adventureworks/models/marts/dim_*.sql, dbt-dimensional-modelling/adventureworks/models/marts/dim_*.yml"
 ---
 
 # AdventureWorks Dimension Conventions
