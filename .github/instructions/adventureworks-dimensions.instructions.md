@@ -1,9 +1,7 @@
 ---
 name: AdventureWorks Dimensions
 description: Use when creating or changing AdventureWorks dbt dimension models and their schema YAML.
-applyTo:
-  - dbt-dimensional-modelling/adventureworks/models/marts/dim_*.sql
-  - dbt-dimensional-modelling/adventureworks/models/marts/dim_*.yml
+applyTo: "dbt-dimensional-modelling/adventureworks/models/marts/dim_*.sql, dbt-dimensional-modelling/adventureworks/models/marts/dim_*.yml"
 ---
 
 # AdventureWorks Dimension Conventions
