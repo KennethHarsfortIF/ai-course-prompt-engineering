@@ -13,11 +13,11 @@ prompt, or dbt command has been run; no model files or build output are recorded
 
 ## Manual Evidence
 
-Use a fresh VS Code Copilot chat on this run branch. Type `/dimension-task` and
-fill in the eight inputs listed in `prompt.md`. Confirm that the prompt file is
-available in Agent Customizations. Check the response's References for the
-instruction file and record whether it was included. References establish
-inclusion, not compliance; check the generated SQL/YAML against the rules.
+Use a fresh VS Code Copilot chat on this run branch. Send the exact invocation
+message shown in `prompt.md`. Confirm that the prompt file is available in Agent
+Customizations. Check the response's References for the instruction file and
+record whether it was included. References establish inclusion, not compliance;
+check the generated SQL/YAML against the rules.
 
 Record the prompt and context, complete assistant response and generated files,
 the actual dbt build command, exit code, and full output. Include failures,
