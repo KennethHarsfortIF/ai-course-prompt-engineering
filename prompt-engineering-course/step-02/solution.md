@@ -137,14 +137,15 @@ agent: agent
 
 Follow the [AdventureWorks dimension instructions](../instructions/adventureworks-dimensions.instructions.md).
 
-Create `${input:model_name:dim_store}`, a dimension for
-`${input:entity:store}`, in `dbt-dimensional-modelling/adventureworks` from the
-`${input:seed:store}` seed. Use `${input:natural_key:businessentityid}` as the
-natural key and `${input:surrogate_key:store_key}` as the surrogate key.
-Include these descriptive attributes: `${input:included_attributes:storename, salespersonid}`.
-Exclude these seed attributes: `${input:excluded_attributes:modifieddate}`.
+Create `${input:model_name:model name}`, a dimension for
+`${input:entity:entity}`, in `dbt-dimensional-modelling/adventureworks` from the
+`${input:seed:seed name}` seed. Use `${input:natural_key:natural key column}` as
+the natural key and `${input:surrogate_key:surrogate key column}` as the
+surrogate key. Include these descriptive attributes:
+`${input:included_attributes:included attributes}`. Exclude these seed
+attributes: `${input:excluded_attributes:excluded attributes}`.
 
-Use `${input:reference_model:dim_customer}` as the structural reference for
+Use `${input:reference_model:reference model}` as the structural reference for
 both the SQL and YAML. Create the model files, validate the requested model,
 and show the result.
 ```
