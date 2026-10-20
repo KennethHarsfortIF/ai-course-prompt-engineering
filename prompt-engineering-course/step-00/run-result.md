@@ -2,16 +2,17 @@
 
 ## Status
 
-**Not executed.** This run branch is intentionally prepared for a manual Copilot
-run. No prompt has been submitted, no files generated, and no dbt command or
-build result recorded.
+**Not executed.** This run branch is prepared for a manual Copilot run. No
+prompt has been submitted and no dbt command or build result is recorded. The
+`dim_store` files on this branch were moved from the solution branch; they are
+not evidence of a prompt run.
 
 - Run branch: `Example-01-step-00-run`.
 - Source: `Example-01-step-00-solution`.
 - Prompt: `prompt-engineering-course/step-00/prompt.md`.
 - Project directory: `dbt-dimensional-modelling/adventureworks`.
-- Expected future model files: `models/marts/dim_store.sql` and
-  `models/marts/dim_store.yml`.
+- Model files: `models/marts/dim_store.sql` and `models/marts/dim_store.yml`
+  (transferred from the solution branch; prompt output not verified).
 
 ## Manual Evidence to Capture
 
