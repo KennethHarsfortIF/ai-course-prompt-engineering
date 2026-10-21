@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: dim_store
+    description: Store dimension with store identifiers and descriptive attributes.
+    columns:
+      - name: store_key
+        description: The surrogate key of the store.
+        tests:
+          - unique
+          - not_null
+
+      - name: businessentityid
+        description: The natural key of the store.
+        tests:
+          - unique
+          - not_null
+
+      - name: storename
+        description: The name of the store.
+
+      - name: salespersonid
+        description: The identifier of the salesperson assigned to the store.
