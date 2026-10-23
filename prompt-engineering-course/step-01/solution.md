@@ -82,9 +82,6 @@ from the `store` seed. Use `businessentityid` as the natural key and
 `store_key` as the surrogate key. Include `storename` and `salespersonid`; omit
 `modifieddate`. Use `dim_customer.sql` and `dim_customer.yml` as structural
 references. Create the model SQL and YAML and validate the requested model.
-
-The [scoped AdventureWorks dimension instructions](../../.github/instructions/adventureworks-dimensions.instructions.md)
-contain the reusable project conventions for matching dimension files.
 ```
 
 ## prompt-engineering-course/step-01/run-result.md
@@ -134,9 +131,7 @@ files into later solution/start branches.
 ---
 name: AdventureWorks Dimensions
 description: Use when creating or changing AdventureWorks dbt dimension models and their schema YAML.
-applyTo:
-  - dbt-dimensional-modelling/adventureworks/models/marts/dim_*.sql
-  - dbt-dimensional-modelling/adventureworks/models/marts/dim_*.yml
+applyTo: "dbt-dimensional-modelling/adventureworks/models/marts/dim_*.sql, dbt-dimensional-modelling/adventureworks/models/marts/dim_*.yml"
 ---
 
 # AdventureWorks Dimension Conventions
