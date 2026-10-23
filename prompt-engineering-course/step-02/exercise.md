@@ -1,5 +1,9 @@
 # Step 02 Exercise: Parameterize the Task Prompt
 
+For a guided walkthrough, see [solution.md](solution.md). It includes the full
+prepared file contents; the run branch is where you capture real Copilot and
+validation evidence.
+
 ## Learning Goal
 
 Keep stable rules in repository instructions while turning variable dimension
