@@ -1,12 +1,31 @@
 # Step 00 Exercise: Try the Prompt
 
-Use the provided prompt to ask AI to create the `dim_store` model, then try
-building it with dbt.
+For a guided walkthrough, see [solution.md](solution.md). It includes the full
+prepared file contents; the run branch is where you capture real AI and dbt
+results.
 
-1. Switch to the `Example-01-step-00-run` branch.
-2. Copy the full prompt from `prompt-engineering-course/step-00/prompt.md` into
-   your AI chat and send it. Let the AI create the model and try the build.
-3. If needed, run `dbt build --select dim_store` from
-   `dbt-dimensional-modelling/adventureworks` to see whether the model builds.
-   Record what happened in `run-result.md`, including any errors. Only mark the
-   build successful if it actually succeeds.
+## Learning Goal
+
+Try a detailed, self-contained prompt that combines the task with project
+conventions, then review the generated dimension and validate it with dbt.
+
+## Branches
+
+- Start: `Example-01-step-00-start` contains this exercise and walkthrough.
+- Solution: `Example-01-step-00-solution` adds the prepared prompt and pending
+  run record.
+- Run: `Example-01-step-00-run` is where you submit the prompt and record actual
+  output and validation evidence.
+
+## Assignment
+
+1. Review `solution.md` for the complete prepared prompt and run-record contents.
+2. On the run branch, submit `prompt-engineering-course/step-00/prompt.md` in an AI chat.
+3. Review generated SQL/YAML, then run `dbt build --select dim_store` from `dbt-dimensional-modelling/adventureworks`.
+4. Record the response, files, command, exit code, output, and fixes in `run-result.md`; only claim success if the build passes.
+
+## Acceptance Checks
+
+- The prompt includes the task details and reusable project conventions.
+- Generated files and run evidence remain on the run branch.
+- The run record distinguishes observed results from assumptions.
