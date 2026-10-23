@@ -1,5 +1,9 @@
 # Step 03 Exercise: Replace a Prompt with a Discoverable Skill
 
+For a guided walkthrough, see [solution.md](solution.md). It includes the full
+prepared file contents; the run branch is where you capture real Copilot and
+validation evidence.
+
 ## Learning Goal
 
 Package the same dimension task from Step 02 as an Agent Skill instead of a
