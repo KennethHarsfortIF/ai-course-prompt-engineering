@@ -2,13 +2,29 @@
 
 This solution prepares course materials only. No prompt, skill, model, or dbt build was executed.
 
-The following blocks are complete verbatim copies of every changed text payload introduced by this step, including its start-branch exercise. Inherited unchanged files are not repeated. This solution document is excluded from its own snapshot to avoid recursive self-embedding.
+## File Index
+
+| Status | File | Purpose |
+|---|---|---|
+| Updated | `prompt-engineering-course/step-01/exercise.md` | Assignment and branch workflow |
+| Added | `prompt-engineering-course/step-01/prompt.md` | Dimension task with a shared-instructions reference |
+| Added | `prompt-engineering-course/step-01/run-result.md` | Pending evidence record for the run branch |
+| Moved | `.github/instructions/adventureworks-dimensions.instructions.md` | Reusable dimension conventions, moved from `prompt-engineering-course/step-01/instruction.md` |
+
+The sections below contain the complete prepared contents of every added or
+updated text file. The moved instruction is shown at its destination;
+inherited unchanged files are not repeated. This solution document is excluded
+from its own snapshot to avoid recursive self-embedding.
 
 ## prompt-engineering-course/step-01/exercise.md
 
 <!-- file: prompt-engineering-course/step-01/exercise.md -->
 ```text no-final-newline
 # Step 01 Exercise: Store Stable Rules as Instructions
+
+For a guided walkthrough, see [solution.md](solution.md). It includes the full
+prepared file contents; the run branch is where you capture real Copilot and
+validation evidence.
 
 ## Learning Goal
 

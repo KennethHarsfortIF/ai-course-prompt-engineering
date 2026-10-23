@@ -1,5 +1,9 @@
 # Step 01 Exercise: Store Stable Rules as Instructions
 
+For a guided walkthrough, see [solution.md](solution.md). It includes the full
+prepared file contents; the run branch is where you capture real Copilot and
+validation evidence.
+
 ## Learning Goal
 
 Separate dimension conventions that should be reused from the one-time task
