@@ -2,30 +2,43 @@
 
 ## Status
 
-**Not executed.** The `/create-dimension` skill has not been invoked. No model,
-assistant response, dbt command, exit code, or build result is recorded.
+**Not executed.** The ordinary-language request has not been submitted. No
+automatic skill loading, model output, assistant response, dbt command, exit
+code, or build result is recorded. Redesigning these materials is not a run.
 
 - Run branch: `Example-01-step-03-run`.
 - Source: `Example-01-step-03-solution`.
-- Exact invocation: `prompt-engineering-course/step-03/prompt.md`.
+- Exact request: `prompt-engineering-course/step-03/prompt.md`.
 - Skill: `.github/skills/create-dimension/SKILL.md`.
-- Native task prompt: `.github/prompts/dimension-task.prompt.md`.
+- Replaced prompt: `.github/prompts/dimension-task.prompt.md` (removed here; retained on the start branch and in Step 02).
 - Instructions: `.github/instructions/adventureworks-dimensions.instructions.md`.
 
-## Manual Skill Evidence
+## Automatic Discovery Evidence
 
-In VS Code Copilot chat, confirm the workspace skill is discovered, then type
-the exact slash invocation in a fresh chat on this run branch. Capture the
-invocation and response. If the response exposes the skill and instruction in
-References, record those references; distinguish discovery, explicit
-invocation, inclusion, and behavioral compliance rather than treating them as
-the same proof.
+Use a fresh VS Code Copilot chat on the run branch with workspace skills enabled.
+Submit the exact request without a slash command, skill attachment, or hint to
+use the skill. Do not use the chat that prepared these materials: it has already
+seen the skill and cannot demonstrate independent discovery.
 
-Review whether the skill read and followed the scoped instructions and used the
-native prompt file's input structure. Check the generated SQL/YAML against the
-output columns and schema requirements. Compare `/create-dimension` (workflow)
-with `/dimension-task` (single reusable prompt) without treating them as the
-same customization.
+After the actual run, replace these pending fields with observations:
+
+- Chat environment and relevant skill settings: pending.
+- Exact request and captured response or screenshot location: pending.
+- Automatic skill loading: pending (observed / not observed / inconclusive).
+- References or tool trace showing skill loading, if available: pending.
+- Shared instruction loading and behavioral compliance: pending.
+- Generated SQL/YAML review and changed files: pending.
+
+Correct model output does not prove skill loading. Missing visible evidence
+does not prove the skill was not loaded. Keep discovery, loading, compliance,
+and build results separate, and report inconclusive observations honestly.
+
+## Optional Explicit Comparison
+
+If automatic loading is not observed, preserve that attempt and optionally use
+`/create-dimension` with the same inputs in a separate fresh chat. Record its
+request, starting file state, response, and results separately. Do not overwrite
+the first attempt's evidence or call explicit invocation automatic discovery.
 
 ## Validation Evidence
 
@@ -36,3 +49,12 @@ or edit seeds to force a result.
 
 Preparation did not invoke the skill or execute dbt. Keep all generated files
 and evidence on this run branch only.
+
+## Comparison with Step 02
+
+Step 02 explicitly selects a prompt with interactive input placeholders. Step 03
+replaces that file with a skill eligible for selection from a relevant request.
+Both mechanisms can express the task; both can be invoked manually. This example
+does not need both. Prompt files remain useful when their input UI or request-level
+agent, model, and tool configuration is wanted. A manually invoked text-only skill
+may otherwise provide little advantage over a prompt file.

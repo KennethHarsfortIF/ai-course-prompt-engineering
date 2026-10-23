@@ -1,74 +1,127 @@
-# Step 03 Solution: Invocable skill workflow
+# Step 03 Solution: Replace the Prompt with a Discoverable Skill
 
 This solution prepares course materials only. No prompt, skill, model, or dbt build was executed.
 
 The following blocks are complete verbatim copies of every changed text payload introduced by this step, including its start-branch exercise. Inherited unchanged files are not repeated. This solution document is excluded from its own snapshot to avoid recursive self-embedding.
 
+## Branch Stages
+
+- `Example-01-step-03-start`: revised exercise and inherited Step 02 prompt;
+   no prepared skill or run artifacts.
+- `Example-01-step-03-solution`: prompt replaced by the skill, with an ordinary
+   request and pending run record. No generated dimension or claimed run evidence.
+- `Example-01-step-03-run`: prepared materials plus actual output and evidence
+   only after a real run. It is intentionally pending until then.
+
+Step 02 branches and their snapshots remain unchanged. Prompts and skills are
+alternatives here, not required layers. Automatic invocation is enabled, but
+discovery and compliance must be observed rather than assumed.
+
+## Deleted File
+
+`.github/prompts/dimension-task.prompt.md` is removed on the solution and run
+branches. Its task instructions now live in the skill; input placeholders become
+instructions to extract values from the request and ask for missing values.
+Use the start branch or Step 02 to inspect the original prompt. The shared
+dimension instruction file remains unchanged.
+
 ## prompt-engineering-course/step-03/exercise.md
 
 <!-- file: prompt-engineering-course/step-03/exercise.md -->
 ```text no-final-newline
-# Step 03 Exercise: Invoke a Reusable Skill
+# Step 03 Exercise: Replace a Prompt with a Discoverable Skill
 
 ## Learning Goal
 
-Combine the earlier pieces into a repeatable workflow. Instructions hold project
-rules, a native VS Code prompt file holds dimension-specific inputs, and an Agent
-Skill guides the procedure for carrying out the task.
+Package the same dimension task from Step 02 as an Agent Skill instead of a
+prompt file. Keep the task and shared project rules the same; change how the
+agent can find the task instructions. This is an alternative, not another
+required layer or a claim that skills always replace prompts.
+
+## Why Use Either?
+
+Prompt files and skills overlap: both can contain reusable task instructions,
+and both can be invoked explicitly. In VS Code, prompt files provide interactive
+input placeholders and request-level agent, model, and tool configuration.
+Skills support discovery from a relevant request and can bundle supporting
+resources that are loaded as needed. Resources are optional for this exercise.
+
+If those prompt-specific conveniences are not needed, a skill can replace the
+prompt. A skill can also disable automatic invocation with
+`disable-model-invocation: true`; manual invocation is not exclusive to prompts.
 
 ## Branches
 
 - Start: `Example-01-step-03-start`, from `Example-01-step-02-solution`.
-- Solution: `Example-01-step-03-solution`, from this branch.
+- Solution: `Example-01-step-03-solution`, from the start branch.
 - Run: `Example-01-step-03-run`, from its solution.
+
+Keep the inherited prompt and this assignment on the start branch. On the
+solution branch, replace the prompt with the skill and prepare the request,
+pending run record, and solution snapshots. Execute the request and record any
+generated model files and actual evidence on the run branch only. These are
+stage responsibilities, not instructions to reset or recreate existing branches.
 
 ## Assignment
 
-1. Create `.github/skills/create-dimension/SKILL.md` using the VS Code project
-   skill format. The directory and frontmatter `name` must both be
-   `create-dimension`.
-2. Make it an explicit slash command, and disable automatic model invocation so
-   the exercise can demonstrate a deliberate `/create-dimension` invocation.
-3. Have the skill reference the existing dimension instructions and the native
-   prompt file `.github/prompts/dimension-task.prompt.md`. Do not duplicate their
-   stable conventions or task wording. Explain that `/dimension-task` runs the
-   prompt file while `/create-dimension` runs the workflow skill.
-4. Create `prompt.md` with the exact slash invocation and task inputs for
-   `dim_store`; add a pending run record and complete solution snapshots.
-5. Do not invoke the skill or execute a dbt build during preparation.
+1. Read `.github/prompts/dimension-task.prompt.md` from Step 02. Move its task
+   instructions into `.github/skills/create-dimension/SKILL.md`, then remove the
+   prompt file on the solution and run branches. Do not change Step 02 branches
+   or their historical solution snapshots.
+2. Set the skill name to `create-dimension` and write a description explaining
+   when to use it. Set `disable-model-invocation: false` and keep
+   `user-invocable: true`. The skill remains available as `/create-dimension`,
+   but the main exercise must not use that command.
+3. Replace `${input:...}` placeholders with instructions to extract the model,
+   entity, seed, keys, attributes, and structural reference from the user's
+   request. Ask for missing values. Reference the existing dimension
+   instructions for shared rules; do not copy them or depend on the deleted
+   prompt file.
+4. Create `prompt.md` with an ordinary-language request for the same `dim_store`
+   task. Do not name the skill, attach its file, or use a slash command. Add a
+   pending run record and complete solution snapshots, including the deletion.
+5. Do not execute the dimension task or a dbt build during preparation.
 
 ## Manual Run and Evidence
 
-On the run branch, use the intended VS Code Copilot chat harness and type the
-exact `/create-dimension` invocation from `prompt.md`. Capture the chat exchange
-or screenshot showing the explicit command; if the response lists the skill in
-References, record that too. The slash invocation demonstrates selection, while
-References provide additional evidence that the skill was included.
+On the run branch, open a fresh VS Code Copilot chat with workspace skills
+enabled and submit the exact request from `prompt.md`. Do not preload the skill
+or mention it in the request. Capture the request and response plus any available
+References or tool trace showing that `SKILL.md` was loaded.
 
-Inspect which instruction file and prompt file the skill used, review the
-generated SQL/YAML, and record actual validation results. Do not claim that
-discovery or invocation guarantees compliance or a successful build.
+Record skill loading as observed, not observed, or inconclusive. Correct model
+output alone does not prove that the skill was used. If automatic loading is not
+observed, retain that result. Optionally try `/create-dimension` in a separate
+fresh chat and record it as an explicit-invocation comparison, not evidence of
+automatic discovery. Preserve any output from the first attempt.
+
+Review the generated SQL/YAML and record actual focused validation results.
+Discovery, loading, compliance, and a successful build are separate observations;
+none guarantees the others.
 
 ## Acceptance Checks
 
-- Skill frontmatter has a valid matching name and is user-invocable.
-- Manual slash invocation is required; automatic skill discovery is disabled.
-- The skill composes earlier instructions and prompt file instead of copying them.
-- The prompt-file command and skill command have distinct names and roles.
-- No skill run, model output, or build result is fabricated.
+- Start retains the Step 02 prompt; solution and run replace it with the skill.
+- The skill has a matching name, a relevant description, and automatic invocation
+   enabled; it can still be invoked explicitly.
+- No unresolved input placeholders or dependency on the removed prompt remain
+   in the skill. Shared dimension conventions stay in the instruction file.
+- The main request has the same task inputs as Step 02 and no skill-selection hint.
+- The solution snapshot records changed files and the removed prompt.
+- Preparation leaves the run record pending; actual discovery, model output, and
+   validation evidence are recorded only after a real run.
 ```
 
 ## prompt-engineering-course/step-03/prompt.md
 
 <!-- file: prompt-engineering-course/step-03/prompt.md -->
 ```text no-final-newline
-/create-dimension Create `dim_store` from the `store` seed in
+Create `dim_store`, a dimension for `store`, from the `store` seed in
 `dbt-dimensional-modelling/adventureworks`. Use `businessentityid` as the
 natural key and `store_key` as the surrogate key. Include `storename` and
 `salespersonid`; exclude `modifieddate`. Use `dim_customer` as the structural
-reference. The skill uses the input structure in
-`.github/prompts/dimension-task.prompt.md`; that separate prompt file can also
-be invoked directly as `/dimension-task`.
+reference for SQL and YAML. Create the model files, validate the requested
+model, and show the result.
 ```
 
 ## prompt-engineering-course/step-03/run-result.md
@@ -79,30 +132,43 @@ be invoked directly as `/dimension-task`.
 
 ## Status
 
-**Not executed.** The `/create-dimension` skill has not been invoked. No model,
-assistant response, dbt command, exit code, or build result is recorded.
+**Not executed.** The ordinary-language request has not been submitted. No
+automatic skill loading, model output, assistant response, dbt command, exit
+code, or build result is recorded. Redesigning these materials is not a run.
 
 - Run branch: `Example-01-step-03-run`.
 - Source: `Example-01-step-03-solution`.
-- Exact invocation: `prompt-engineering-course/step-03/prompt.md`.
+- Exact request: `prompt-engineering-course/step-03/prompt.md`.
 - Skill: `.github/skills/create-dimension/SKILL.md`.
-- Native task prompt: `.github/prompts/dimension-task.prompt.md`.
+- Replaced prompt: `.github/prompts/dimension-task.prompt.md` (removed here; retained on the start branch and in Step 02).
 - Instructions: `.github/instructions/adventureworks-dimensions.instructions.md`.
 
-## Manual Skill Evidence
+## Automatic Discovery Evidence
 
-In VS Code Copilot chat, confirm the workspace skill is discovered, then type
-the exact slash invocation in a fresh chat on this run branch. Capture the
-invocation and response. If the response exposes the skill and instruction in
-References, record those references; distinguish discovery, explicit
-invocation, inclusion, and behavioral compliance rather than treating them as
-the same proof.
+Use a fresh VS Code Copilot chat on the run branch with workspace skills enabled.
+Submit the exact request without a slash command, skill attachment, or hint to
+use the skill. Do not use the chat that prepared these materials: it has already
+seen the skill and cannot demonstrate independent discovery.
 
-Review whether the skill read and followed the scoped instructions and used the
-native prompt file's input structure. Check the generated SQL/YAML against the
-output columns and schema requirements. Compare `/create-dimension` (workflow)
-with `/dimension-task` (single reusable prompt) without treating them as the
-same customization.
+After the actual run, replace these pending fields with observations:
+
+- Chat environment and relevant skill settings: pending.
+- Exact request and captured response or screenshot location: pending.
+- Automatic skill loading: pending (observed / not observed / inconclusive).
+- References or tool trace showing skill loading, if available: pending.
+- Shared instruction loading and behavioral compliance: pending.
+- Generated SQL/YAML review and changed files: pending.
+
+Correct model output does not prove skill loading. Missing visible evidence
+does not prove the skill was not loaded. Keep discovery, loading, compliance,
+and build results separate, and report inconclusive observations honestly.
+
+## Optional Explicit Comparison
+
+If automatic loading is not observed, preserve that attempt and optionally use
+`/create-dimension` with the same inputs in a separate fresh chat. Record its
+request, starting file state, response, and results separately. Do not overwrite
+the first attempt's evidence or call explicit invocation automatic discovery.
 
 ## Validation Evidence
 
@@ -113,6 +179,15 @@ or edit seeds to force a result.
 
 Preparation did not invoke the skill or execute dbt. Keep all generated files
 and evidence on this run branch only.
+
+## Comparison with Step 02
+
+Step 02 explicitly selects a prompt with interactive input placeholders. Step 03
+replaces that file with a skill eligible for selection from a relevant request.
+Both mechanisms can express the task; both can be invoked manually. This example
+does not need both. Prompt files remain useful when their input UI or request-level
+agent, model, and tool configuration is wanted. A manually invoked text-only skill
+may otherwise provide little advantage over a prompt file.
 ```
 
 ## .github/skills/create-dimension/SKILL.md
@@ -124,40 +199,32 @@ name: create-dimension
 description: Create or update a dimension in the AdventureWorks dbt project from task-specific inputs. Use when asked to build a dimension from a seed and validate its SQL/YAML model.
 argument-hint: "[dimension task inputs]"
 user-invocable: true
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Create a Dimension
 
-Use this workflow when the user explicitly invokes `/create-dimension`.
-Automatic skill invocation is disabled for this course so the learner can see
-and record the slash command.
+Use this workflow when asked to create or update an AdventureWorks dbt dimension
+from a seed. It can be selected from a relevant ordinary-language request or
+invoked explicitly as `/create-dimension`.
 
 ## Resources
 
 - Read the [AdventureWorks dimension instructions](../../instructions/adventureworks-dimensions.instructions.md)
   for stable model and validation conventions.
-- Read the [dimension task prompt file](../../prompts/dimension-task.prompt.md)
-   for the task request structure and input fields.
-
-Do not copy the full instruction list or prompt text into a second reusable
-source. Resolve resource paths relative to this skill directory. The prompt file
-uses VS Code `${input:...}` variables when invoked directly as `/dimension-task`;
-when this skill is invoked, collect concrete values from the user's request and
-never send unresolved input tokens as if they were task values.
 
 ## Workflow
 
 1. Extract the requested model name, entity, seed, natural key, surrogate key,
-   included and excluded attributes, and structural reference from the invocation.
+   included and excluded attributes, and structural reference from the request.
    Ask concise questions for any missing values; do not guess.
 2. Confirm the task is in `dbt-dimensional-modelling/adventureworks` and that
    the requested model files do not contain unrelated user work.
-3. Use the prompt file's input fields to structure the task request. When the
-   skill invocation includes concrete values, apply them directly; ask for any
-   missing values. Keep the instruction reference intact and do not leave
-   unresolved input tokens in the prompt sent for implementation.
-4. Implement only the requested dimension SQL and its companion schema YAML.
+3. Use the specified structural reference for both SQL and YAML. Create the
+   requested dimension from the seed using the supplied natural and surrogate
+   keys. Include the requested descriptive attributes and omit excluded ones.
+4. Implement only the requested dimension SQL and its companion schema YAML,
+   following the shared dimension instructions.
    Do not edit seed data, other dimensions, facts, profiles, package versions,
    schema macros, or unrelated files. Preserve existing user changes.
 5. Validate the focused model using the project-local DuckDB profile. From the
@@ -168,10 +235,12 @@ never send unresolved input tokens as if they were task values.
 6. Report changed files, the command actually run, exit status, and concise
    result. If validation was not run, say so; never invent build evidence.
 
-## Example Invocation
+## Example Request
 
-`/create-dimension Create dim_store from the store seed. Use businessentityid as
-the natural key and store_key as the surrogate key. Include storename and
-salespersonid; exclude modifieddate. Use dim_customer as the structural reference.`
+Create dim_store, a dimension for store, from the store seed in
+dbt-dimensional-modelling/adventureworks. Use businessentityid as the natural
+key and store_key as the surrogate key. Include storename and salespersonid;
+exclude modifieddate. Use dim_customer as the structural reference for SQL and
+YAML. Create the model files, validate the requested model, and show the result.
 ```
 
