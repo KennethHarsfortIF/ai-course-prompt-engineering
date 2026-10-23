@@ -9,8 +9,7 @@ disable-model-invocation: false
 # Create a Dimension
 
 Use this workflow when asked to create or update an AdventureWorks dbt dimension
-from a seed. It can be selected from a relevant ordinary-language request or
-invoked explicitly as `/create-dimension`.
+from a seed.
 
 ## Resources
 
@@ -21,16 +20,21 @@ invoked explicitly as `/create-dimension`.
 
 1. Extract the requested model name, entity, seed, natural key, surrogate key,
    included and excluded attributes, and structural reference from the request.
-   Ask concise questions for any missing values; do not guess.
-2. Confirm the task is in `dbt-dimensional-modelling/adventureworks` and that
-   the requested model files do not contain unrelated user work.
-3. Use the specified structural reference for both SQL and YAML. Create the
-   requested dimension from the seed using the supplied natural and surrogate
-   keys. Include the requested descriptive attributes and omit excluded ones.
-4. Implement only the requested dimension SQL and its companion schema YAML,
-   following the shared dimension instructions.
-   Do not edit seed data, other dimensions, facts, profiles, package versions,
-   schema macros, or unrelated files. Preserve existing user changes.
+   Ask concise questions only when missing or ambiguous information prevents
+   correct implementation; do not guess. An omitted exclusion list means no
+   additional exclusions, not a missing required input.
+2. Verify that the requested dimension belongs in
+   `dbt-dimensional-modelling/adventureworks`. Before editing its SQL/YAML files,
+   check for existing user changes and preserve them.
+3. Inspect the seed's columns and the reference model's SQL/YAML before
+   generating code. Verify that requested source columns exist. Report missing
+   columns or unavailable references rather than inventing them.
+4. Create or update only the requested dimension SQL and companion schema YAML.
+   Use the supplied keys, include the requested descriptive attributes, and omit
+   excluded attributes. Use the reference model for structure; if it conflicts
+   with the shared dimension instructions, follow the shared instructions.
+   Do not edit seeds, other models, profiles, packages, schema macros, or
+   unrelated files.
 5. Validate the focused model using the project-local DuckDB profile. From the
    AdventureWorks project directory, run
    `dbt build --select <model_name> --profiles-dir . --target duckdb`.
@@ -38,11 +42,3 @@ invoked explicitly as `/create-dimension`.
    the blocker instead of broadening the command or changing source data.
 6. Report changed files, the command actually run, exit status, and concise
    result. If validation was not run, say so; never invent build evidence.
-
-## Example Request
-
-Create dim_store, a dimension for store, from the store seed in
-dbt-dimensional-modelling/adventureworks. Use businessentityid as the natural
-key and store_key as the surrogate key. Include storename and salespersonid;
-exclude modifieddate. Use dim_customer as the structural reference for SQL and
-YAML. Create the model files, validate the requested model, and show the result.
