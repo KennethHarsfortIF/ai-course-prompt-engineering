@@ -41,11 +41,14 @@ reset or recreate existing branches.
    when to use it. Set `disable-model-invocation: false` and keep
    `user-invocable: true`. The skill remains available as `/create-dimension`,
    but the main exercise must not use that command.
-3. Replace `${input:...}` placeholders with instructions to extract the same
-   values from the user's request: model, entity, seed, keys, attributes, and
-   structural reference. Ask about any missing or ambiguous value before acting;
-   never guess. Reference the existing dimension instructions instead of copying
-   the shared rules. Do not add a different modeling or validation workflow.
+3. Replace each `${input:...}` placeholder with an instruction to extract that
+   value from the user's request, then keep the prompt's explicit mapping:
+   create `<model_name>`, a dimension for `<entity>`, from `<seed>`; use
+   `<natural_key>` as the natural key and `<surrogate_key>` as the surrogate;
+   include `<included_attributes>` and exclude `<excluded_attributes>`; use
+   `<reference_model>` for both SQL and YAML. Ask about missing or ambiguous
+   values before acting; never guess. Refer to the shared dimension instructions
+   instead of copying those rules.
 4. Create `prompt.md` with an ordinary-language request for the same `dim_store`
    task. Do not name the skill, attach its file, or use a slash command. Add a
    pending run record and complete solution snapshots, including the deletion.
