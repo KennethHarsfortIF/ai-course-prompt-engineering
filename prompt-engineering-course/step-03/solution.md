@@ -1,4 +1,4 @@
-# Step 03 Solution: Replace the Prompt with a Discoverable Skill
+# Step 03 Solution: Package the Same Task as a Skill
 
 This solution prepares course materials only. No prompt, skill, model, or dbt build was executed.
 
@@ -6,10 +6,10 @@ This solution prepares course materials only. No prompt, skill, model, or dbt bu
 
 | Status | File | Purpose |
 |---|---|---|
-| Updated | `prompt-engineering-course/step-03/exercise.md` | Assignment and branch workflow |
+| Updated | `prompt-engineering-course/step-03/exercise.md` | Same-task comparison and branch workflow |
 | Added | `prompt-engineering-course/step-03/prompt.md` | Plain-language request for the manual run |
 | Added | `prompt-engineering-course/step-03/run-result.md` | Pending evidence record for the run branch |
-| Added | `.github/skills/create-dimension/SKILL.md` | Discoverable dimension workflow |
+| Added | `.github/skills/create-dimension/SKILL.md` | Same dimension task, with values extracted from the request |
 | Deleted | `.github/prompts/dimension-task.prompt.md` | Replaced by the skill on solution and run branches |
 
 The sections below contain the complete prepared contents of every added or
@@ -18,30 +18,32 @@ document is excluded from its own snapshot to avoid recursive self-embedding.
 
 ## Branch Stages
 
-- `Example-01-step-03-start`: revised exercise and inherited Step 02 prompt;
-   this walkthrough; no prepared skill or run artifacts.
-- `Example-01-step-03-solution`: prompt replaced by the skill, with an ordinary
-   request and pending run record. No generated dimension or claimed run evidence.
-- `Example-01-step-03-run`: prepared materials plus actual output and evidence
-   only after a real run. It is intentionally pending until then.
+- `Example-01-step-03-start`: keeps the original Step 02 prompt and updated
+   exercise; no skill or run artifacts are added.
+- `Example-01-step-03-solution`: packages the same task as a skill and adds an
+   ordinary-language request plus a pending run record.
+- `Example-01-step-03-run`: records the real manual test and evidence only after
+   it happens; the prepared run record remains pending until then.
 
-Step 02 branches and their snapshots remain unchanged. Prompts and skills are
-alternatives here, not required layers. Automatic invocation is enabled, but
-discovery and compliance must be observed rather than assumed.
+Step 02 branches and their snapshots remain unchanged. The task and shared
+dimension rules stay the same; only packaging and input handling change.
+Automatic invocation is enabled, but discovery must be observed rather than
+assumed.
 
 ## Deleted File
 
 `.github/prompts/dimension-task.prompt.md` is removed on the solution and run
-branches. Its task instructions now live in the skill; input placeholders become
-instructions to extract values from the request and ask for missing values.
-Use the start branch or Step 02 to inspect the original prompt. The shared
-dimension instruction file remains unchanged.
+branches. Its task instructions now live in the skill. Input placeholders become
+instructions to extract the same values from the request and ask about anything
+missing or ambiguous; the skill must never guess. Use the start branch or Step 02
+to inspect the original prompt. Shared dimension rules remain in the existing
+instruction file.
 
 ## prompt-engineering-course/step-03/exercise.md
 
 <!-- file: prompt-engineering-course/step-03/exercise.md -->
 ```text no-final-newline
-# Step 03 Exercise: Replace a Prompt with a Discoverable Skill
+# Step 03 Exercise: Package the Same Task as a Skill
 
 For a guided walkthrough, see [solution.md](solution.md). It includes the full
 prepared file contents; the run branch is where you capture real Copilot and
@@ -49,22 +51,18 @@ validation evidence.
 
 ## Learning Goal
 
-Package the same dimension task from Step 02 as an Agent Skill instead of a
-prompt file. Keep the task and shared project rules the same; change how the
-agent can find the task instructions. This is an alternative, not another
-required layer or a claim that skills always replace prompts.
+In Step 02, the dimension task was packaged as a prompt file with input
+placeholders. Now package that same task as an Agent Skill. Keep the requested
+model, task details, and shared dimension rules unchanged. The comparison is
+about how Copilot finds the instructions, not a new modeling workflow.
 
 ## Why Use Either?
 
-Prompt files and skills overlap: both can contain reusable task instructions,
-and both can be invoked explicitly. In VS Code, prompt files provide interactive
-input placeholders and request-level agent, model, and tool configuration.
-Skills support discovery from a relevant request and can bundle supporting
-resources that are loaded as needed. Resources are optional for this exercise.
-
-If those prompt-specific conveniences are not needed, a skill can replace the
-prompt. A skill can also disable automatic invocation with
-`disable-model-invocation: true`; manual invocation is not exclusive to prompts.
+Prompt files and skills overlap, and both can be invoked explicitly. Prompt
+files can provide input placeholders and request-level agent, model, and tool
+configuration. Skills can be discovered from a relevant request and can bundle
+optional resources. This exercise keeps the task constant to focus on that
+difference; correct output alone does not prove a skill was discovered.
 
 ## Branches
 
@@ -72,27 +70,27 @@ prompt. A skill can also disable automatic invocation with
 - Solution: `Example-01-step-03-solution`, from the start branch.
 - Run: `Example-01-step-03-run`, from its solution.
 
-Keep the inherited prompt and this assignment on the start branch. On the
-solution branch, replace the prompt with the skill and prepare the request,
-pending run record, and solution snapshots. Execute the request and record any
-generated model files and actual evidence on the run branch only. These are
-stage responsibilities, not instructions to reset or recreate existing branches.
+Keep the original Step 02 prompt on the start branch. On the solution branch,
+replace it with the skill and prepare the ordinary-language request, pending
+run record, and solution snapshots. Test the request and record actual evidence
+on the run branch only. These are stage responsibilities, not instructions to
+reset or recreate existing branches.
 
 ## Assignment
 
-1. Read `.github/prompts/dimension-task.prompt.md` from Step 02. Move its task
-   instructions into `.github/skills/create-dimension/SKILL.md`, then remove the
-   prompt file on the solution and run branches. Do not change Step 02 branches
-   or their historical solution snapshots.
+1. Read `.github/prompts/dimension-task.prompt.md` from Step 02. Package the same
+   task instructions in `.github/skills/create-dimension/SKILL.md`; keep the task
+   and shared rules equivalent. Remove the prompt file on the solution and run
+   branches only. Do not change Step 02 branches or historical snapshots.
 2. Set the skill name to `create-dimension` and write a description explaining
    when to use it. Set `disable-model-invocation: false` and keep
    `user-invocable: true`. The skill remains available as `/create-dimension`,
    but the main exercise must not use that command.
-3. Replace `${input:...}` placeholders with instructions to extract the model,
-   entity, seed, keys, attributes, and structural reference from the user's
-   request. Ask for missing values. Reference the existing dimension
-   instructions for shared rules; do not copy them or depend on the deleted
-   prompt file.
+3. Replace `${input:...}` placeholders with instructions to extract the same
+   values from the user's request: model, entity, seed, keys, attributes, and
+   structural reference. Ask about any missing or ambiguous value before acting;
+   never guess. Reference the existing dimension instructions instead of copying
+   the shared rules. Do not add a different modeling or validation workflow.
 4. Create `prompt.md` with an ordinary-language request for the same `dim_store`
    task. Do not name the skill, attach its file, or use a slash command. Add a
    pending run record and complete solution snapshots, including the deletion.
@@ -120,6 +118,8 @@ none guarantees the others.
 - Start retains the Step 02 prompt; solution and run replace it with the skill.
 - The skill has a matching name, a relevant description, and automatic invocation
    enabled; it can still be invoked explicitly.
+- The task and shared dimension rules stay the same; only packaging and input
+   handling change.
 - No unresolved input placeholders or dependency on the removed prompt remain
    in the skill. Shared dimension conventions stay in the instruction file.
 - The main request has the same task inputs as Step 02 and no skill-selection hint.
@@ -211,7 +211,7 @@ may otherwise provide little advantage over a prompt file.
 ```text
 ---
 name: create-dimension
-description: Create or update a dimension in the AdventureWorks dbt project from task-specific inputs. Use when asked to build a dimension from a seed and validate its SQL/YAML model.
+description: Create an AdventureWorks dbt dimension from a seed using task details in the user's request.
 argument-hint: "[dimension task inputs]"
 user-invocable: true
 disable-model-invocation: false
@@ -219,39 +219,16 @@ disable-model-invocation: false
 
 # Create a Dimension
 
-Use this workflow when asked to create or update an AdventureWorks dbt dimension
-from a seed.
+Follow the [AdventureWorks dimension instructions](../../instructions/adventureworks-dimensions.instructions.md)
+for the shared model and validation conventions.
 
-## Resources
+Extract the model name, entity, seed, natural key, surrogate key, included and
+excluded attributes, and structural reference from the user's request. If any
+value is missing or ambiguous, ask the user before proceeding. Never guess.
 
-- Read the [AdventureWorks dimension instructions](../../instructions/adventureworks-dimensions.instructions.md)
-  for stable model and validation conventions.
-
-## Workflow
-
-1. Extract the requested model name, entity, seed, natural key, surrogate key,
-   included and excluded attributes, and structural reference from the request.
-   Ask concise questions only when missing or ambiguous information prevents
-   correct implementation; do not guess. An omitted exclusion list means no
-   additional exclusions, not a missing required input.
-2. Verify that the requested dimension belongs in
-   `dbt-dimensional-modelling/adventureworks`. Before editing its SQL/YAML files,
-   check for existing user changes and preserve them.
-3. Inspect the seed's columns and the reference model's SQL/YAML before
-   generating code. Verify that requested source columns exist. Report missing
-   columns or unavailable references rather than inventing them.
-4. Create or update only the requested dimension SQL and companion schema YAML.
-   Use the supplied keys, include the requested descriptive attributes, and omit
-   excluded attributes. Use the reference model for structure; if it conflicts
-   with the shared dimension instructions, follow the shared instructions.
-   Do not edit seeds, other models, profiles, packages, schema macros, or
-   unrelated files.
-5. Validate the focused model using the project-local DuckDB profile. From the
-   AdventureWorks project directory, run
-   `dbt build --select <model_name> --profiles-dir . --target duckdb`.
-   If prerequisites such as the seed relation or packages are missing, report
-   the blocker instead of broadening the command or changing source data.
-6. Report changed files, the command actually run, exit status, and concise
-   result. If validation was not run, say so; never invent build evidence.
+Create the requested dimension SQL and companion schema YAML. Use the supplied
+structural reference for both files, and validate the requested model according
+to the shared instructions. Report the files changed and the actual validation
+result.
 ```
 
