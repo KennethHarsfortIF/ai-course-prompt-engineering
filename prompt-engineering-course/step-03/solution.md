@@ -88,7 +88,7 @@ reset or recreate existing branches.
    but the main exercise must not use that command.
 3. Replace each `${input:...}` placeholder with an instruction to extract that
    value from the user's request, then keep the prompt's explicit mapping:
-   create `<model>` as a dimension for `<entity>` from `<seed>`; use
+   create `<model_name>`, a dimension for `<entity>`, from `<seed>`; use
    `<natural_key>` as the natural key and `<surrogate_key>` as the surrogate;
    include `<included_attributes>` and exclude `<excluded_attributes>`; use
    `<reference_model>` for both SQL and YAML. Ask about missing or ambiguous
