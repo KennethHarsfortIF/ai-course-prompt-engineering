@@ -1,8 +1,8 @@
 # Step 03 Exercise: Package the Same Task as a Skill
 
 For a guided walkthrough, see [solution.md](solution.md). It includes the full
-prepared file contents; the run branch is where you capture real Copilot and
-validation evidence.
+prepared file contents. Use the run branch for your own work and the demo
+branch as a completed reference.
 
 ## Learning Goal
 
@@ -22,21 +22,24 @@ difference; correct output alone does not prove a skill was discovered.
 ## Branches
 
 - Start: `Example-01-step-03-start`, from `Example-01-step-02-solution`.
-- Solution: `Example-01-step-03-solution`, from the start branch.
-- Run: `Example-01-step-03-run`, from its solution.
+- Run: `Example-01-step-03-run` is your workspace, initially identical to start;
+   complete the exercise here.
+- Solution: `Example-01-step-03-solution` contains the prepared skill and
+   ordinary-language request as a reference.
+- Demo: `Example-01-step-03-demo` contains a completed example with generated
+   models and recorded validation results.
 
-Keep the original Step 02 prompt on the start branch. On the solution branch,
-replace it with the skill and prepare the ordinary-language request, pending
-run record, and solution snapshots. Test the request and record actual evidence
-on the run branch only. These are stage responsibilities, not instructions to
-reset or recreate existing branches.
+The start and fresh run branches retain the original Step 02 prompt. During
+the assignment, replace that prompt with the skill on your run branch, then
+test the ordinary-language request there. Leave the start, solution, and demo
+reference branches unchanged; do not reset or recreate them.
 
 ## Assignment
 
 1. Read `.github/prompts/dimension-task.prompt.md` from Step 02. Package the same
    task instructions in `.github/skills/create-dimension/SKILL.md`; keep the task
-   and shared rules equivalent. Remove the prompt file on the solution and run
-   branches only. Do not change Step 02 branches or historical snapshots.
+   and shared rules equivalent. Replace the prompt file with the skill on your
+   run branch only. Leave Step 02 task files and prior task examples unchanged.
 2. Set the skill name to `create-dimension` and write a description explaining
    when to use it. Set `disable-model-invocation: false` and keep
    `user-invocable: true`. The skill remains available as `/create-dimension`,
@@ -50,30 +53,33 @@ reset or recreate existing branches.
    values before acting; never guess. Refer to the shared dimension instructions
    instead of copying those rules.
 4. Create `prompt.md` with an ordinary-language request for the same `dim_store`
-   task. Do not name the skill, attach its file, or use a slash command. Add a
-   pending run record and complete solution snapshots, including the deletion.
+   task. Do not name the skill, attach its file, or use a slash command. Consult
+   the supplied `solution.md` as needed; personal `run-result.md` notes are optional.
 5. Do not execute the dimension task or a dbt build during preparation.
 
-## Manual Run and Evidence
+## Manual Run and Checks
 
 On the run branch, open a fresh VS Code Copilot chat with workspace skills
 enabled and submit the exact request from `prompt.md`. Do not preload the skill
-or mention it in the request. Capture the request and response plus any available
-References or tool trace showing that `SKILL.md` was loaded.
+or mention it in the request. Inspect any available References or tool trace
+for evidence that `SKILL.md` was loaded.
 
-Record skill loading as observed, not observed, or inconclusive. Correct model
+Assess skill loading as observed, not observed, or inconclusive. Correct model
 output alone does not prove that the skill was used. If automatic loading is not
-observed, retain that result. Optionally try `/create-dimension` in a separate
-fresh chat and record it as an explicit-invocation comparison, not evidence of
-automatic discovery. Preserve any output from the first attempt.
+observed, do not claim that it occurred. Optionally try `/create-dimension` in a
+separate fresh chat and treat it as an explicit-invocation comparison, not
+evidence of automatic discovery.
 
-Review the generated SQL/YAML and record actual focused validation results.
+Review the generated SQL/YAML and actually run the focused dbt validation
+described in the shared instructions. Keeping a personal record of observations
+and validation outcomes is optional, not an acceptance requirement.
 Discovery, loading, compliance, and a successful build are separate observations;
 none guarantees the others.
 
 ## Acceptance Checks
 
-- Start retains the Step 02 prompt; solution and run replace it with the skill.
+- Start retains the Step 02 prompt. On your run branch, replace it with the skill
+   during the assignment; solution and demo show the prepared packaging.
 - The skill has a matching name, a relevant description, and automatic invocation
    enabled; it can still be invoked explicitly.
 - The task and shared dimension rules stay the same; only packaging and input
@@ -81,6 +87,6 @@ none guarantees the others.
 - No unresolved input placeholders or dependency on the removed prompt remain
    in the skill. Shared dimension conventions stay in the instruction file.
 - The main request has the same task inputs as Step 02 and no skill-selection hint.
-- The solution snapshot records changed files and the removed prompt.
-- Preparation leaves the run record pending; actual discovery, model output, and
-   validation evidence are recorded only after a real run.
+- The skill and ordinary-language request are prepared before the manual test.
+- Discovery claims and validation outcomes are based on actual observations,
+  not assumed from correct-looking output. Written notes are optional.
