@@ -2,86 +2,125 @@
 
 ## Status
 
-**Executed in the current workspace.** The dimension was generated and built
-successfully. This was not a manually observed VS Code Copilot Chat run, so the
-Agent Customizations UI and response References were not captured.
+**Build passed; prompt-customization evidence is incomplete.** The prompt-file
+task was run in this interaction, the requested model files were created, and
+the focused DuckDB build and key tests passed. Whether this interaction met the
+fresh-chat criterion was not independently verified. Agent Customizations and
+response References were not inspected, so instruction discovery is unverified.
 
-- Run branch: `Example-01-step-02-run` (branch name not independently checked).
+- Run branch: `Example-01-step-02-run`.
 - Source: `Example-01-step-02-solution`.
 - Invocation record: `prompt-engineering-course/step-02/prompt.md`.
 - VS Code prompt file: `.github/prompts/dimension-task.prompt.md`.
 - Applicable instructions: `.github/instructions/adventureworks-dimensions.instructions.md`.
-- Execution context: prompt task submitted in the current Copilot conversation;
-	the dimension instructions were read directly. No References-pane evidence is
-	available to establish automatic instruction inclusion.
+- Execution context: the prompt file was attached to the request in this
+	interaction; fresh-chat status and UI customization evidence remain
+	unverified.
 
 ## Invocation
 
 ```text
-/dimension-task model_name=dim_store entity=store seed=store natural_key=businessentityid surrogate_key=store_key included_attributes=storename,salespersonid excluded_attributes=modifieddate reference_model=dim_customer
+Follow instructions in #prompt:dimension-task.prompt.md with these arguments:
+model_name=dim_store entity=store seed=store natural_key=businessentityid
+surrogate_key=store_key included_attributes=storename,salespersonid
+excluded_attributes=modifieddate reference_model=dim_customer
 ```
 
-## Generated Files
+## Generated SQL
 
-The generated model files are committed alongside this record:
+```sql
+with stg_store as (
+    select
+        businessentityid,
+        storename,
+        salespersonid
+    from {{ ref('store') }}
+)
 
-- [dim_store.sql](../../dbt-dimensional-modelling/adventureworks/models/marts/dim_store.sql) stages the `store` seed and selects `store_key`, `businessentityid`, `storename`, and `salespersonid` explicitly.
-- [dim_store.yml](../../dbt-dimensional-modelling/adventureworks/models/marts/dim_store.yml) documents every output column and tests both keys for uniqueness and non-null values.
+select
+    {{ dbt_utils.generate_surrogate_key(['stg_store.businessentityid']) }} as store_key,
+    stg_store.businessentityid,
+    stg_store.storename,
+    stg_store.salespersonid
+from stg_store
+```
+
+## Generated YAML
+
+```yaml
+version: 2
+
+models:
+  - name: dim_store
+    description: Store dimension with store identifiers and descriptive attributes.
+    columns:
+      - name: store_key
+        description: The surrogate key of the store.
+        tests:
+          - unique
+          - not_null
+
+      - name: businessentityid
+        description: The natural key of the store.
+        tests:
+          - unique
+          - not_null
+
+      - name: storename
+        description: The name of the store.
+
+      - name: salespersonid
+        description: The identifier of the salesperson assigned to the store.
+```
 
 ## Build Evidence
 
-The initial `dbt build` attempt failed because `dbt` was not on the terminal
-PATH. `python -m dbt` was also unavailable as an entry point. The workspace
-virtual environment's dbt executable was then used successfully.
-
-- Working directory: `dbt-dimensional-modelling/adventureworks`.
-- Command: `C:\Users\HARKEA\ai-course-prompt-engineering\.venv\Scripts\dbt.exe build --select dim_store --profiles-dir . --target duckdb`.
-- Exit code: `0`.
-- Runtime: dbt `1.12.5`, DuckDB adapter `1.11.0`.
-- Result: 1 table model and 4 data tests passed; 0 warnings, 0 errors.
+The first attempt was run from the workspace root. It exited 1 because the
+DuckDB profile path `target/adventureworks.duckdb` resolved relative to that
+directory, where `target` does not exist:
 
 ```text
-07:27:01  Running with dbt=1.12.5
-07:27:02  Registered adapter: duckdb=1.11.0
-07:27:10  Found 9 models, 15 seeds, 46 data tests, 613 macros
-
-07:27:10  Concurrency: 12 threads (target='duckdb')
-
-07:27:18  1 of 5 START sql table model marts.dim_store [RUN]
-07:27:18  1 of 5 OK created sql table model marts.dim_store [OK in 0.11s]
-07:27:18  4 of 5 START test unique_dim_store_businessentityid [RUN]
-07:27:18  5 of 5 START test unique_dim_store_store_key [RUN]
-07:27:18  3 of 5 START test not_null_dim_store_store_key [RUN]
-07:27:18  2 of 5 START test not_null_dim_store_businessentityid [RUN]
-07:27:19  2 of 5 PASS not_null_dim_store_businessentityid [PASS in 0.06s]
-07:27:19  3 of 5 PASS not_null_dim_store_store_key [PASS in 0.07s]
-07:27:19  4 of 5 PASS unique_dim_store_businessentityid [PASS in 0.09s]
-07:27:19  5 of 5 PASS unique_dim_store_store_key [PASS in 0.08s]
-
-07:27:19  Finished running 1 table model, 4 data tests in 0 hours 0 minutes and 8.57 seconds (8.57s).
-
-07:27:19  Completed successfully
-
-07:27:19  Done. PASS=5 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=5
-
-dbt exit status: 0
+& .\.venv\Scripts\dbt.exe build --project-dir .\dbt-dimensional-modelling\adventureworks --profiles-dir .\dbt-dimensional-modelling\adventureworks --select dim_store --target duckdb
+IO Error: Cannot open file "C:\Users\HARKEA\ai-course-prompt-engineering\target\adventureworks.duckdb": The system cannot find the path specified.
+Exit code: 1
 ```
 
-## Result Preview
+The successful retry ran from
+`dbt-dimensional-modelling/adventureworks` with the workspace `.venv`:
+
+```text
+& ..\..\.venv\Scripts\dbt.exe build --select dim_store --profiles-dir . --target duckdb
+Exit code: 0
+```
+
+```text
+Running with dbt=1.12.5
+Registered adapter: duckdb=1.11.0
+Found 9 models, 15 seeds, 46 data tests, 613 macros
+Concurrency: 12 threads (target='duckdb')
+1 of 5 START sql table model marts.dim_store
+1 of 5 OK created sql table model marts.dim_store
+2 of 5 PASS not_null_dim_store_businessentityid
+3 of 5 PASS not_null_dim_store_store_key
+5 of 5 PASS unique_dim_store_store_key
+4 of 5 PASS unique_dim_store_businessentityid
+Finished running 1 table model, 4 data tests in 0 hours 0 minutes and 0.41 seconds.
+Completed successfully
+Done. PASS=5 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=5
+```
 
 `dbt show --select dim_store --limit 5 --profiles-dir . --target duckdb`
-completed with exit code `0`. The materialized result included these first
-five rows (dbt abbreviates long surrogate keys in its preview):
+also succeeded and returned:
 
-| store_key | businessentityid | storename | salespersonid |
-|---|---:|---|---:|
-| `1700002963a49da13...` | 292 | Next-Door Bike Store | 279 |
-| `6883966fd8f918a4a...` | 294 | Professional Sales and Service | 276 |
-| `d296c101daa88a51f...` | 296 | Riders Company | 277 |
-| `26e359e83860db1d1...` | 298 | The Bike Mechanics | 275 |
-| `94f6d7e04a4d45203...` | 300 | Nationwide Supply | 286 |
+| businessentityid | storename | salespersonid |
+| ---: | --- | ---: |
+| 292 | Next-Door Bike Store | 279 |
+| 294 | Professional Sales and Service | 276 |
+| 296 | Riders Company | 277 |
+| 298 | The Bike Mechanics | 275 |
+| 300 | Nationwide Supply | 286 |
 
-The `modifieddate` seed attribute is omitted. The generated model and evidence
-are specific to this run; do not carry them into later start or solution
-branches. This prompt-file invocation remains distinct from the
+The generated dimension omits `modifieddate`. The database was not reset and
+the seed was not edited. Keep the generated model files and run evidence off
+later start and solution branches. This prompt-file task is distinct from the
 `/create-dimension` workflow skill introduced in step 03.
