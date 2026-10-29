@@ -1,8 +1,8 @@
 # Step 02 Exercise: Parameterize the Task Prompt
 
 For a guided walkthrough, see [solution.md](solution.md). It includes the full
-prepared file contents; the run branch is where you capture real Copilot and
-validation evidence.
+prepared file contents. Use the run branch for your own work and the demo
+branch as a completed reference.
 
 ## Learning Goal
 
@@ -14,20 +14,24 @@ skill.
 ## Branches
 
 - Start: `Example-01-step-02-start`, from `Example-01-step-01-solution`.
-- Solution: `Example-01-step-02-solution`, from this branch.
-- Run: `Example-01-step-02-run`, from the solution.
+- Run: `Example-01-step-02-run` is your workspace, initially identical to start;
+   complete the exercise here.
+- Solution: `Example-01-step-02-solution` contains the prepared prompt file
+   and invocation example as a reference.
+- Demo: `Example-01-step-02-demo` contains a completed example with generated
+   models and recorded validation results.
 
 ## Assignment
 
-1. Create `.github/prompts/dimension-task.prompt.md` with prompt-file frontmatter
+1. On the run branch, create `.github/prompts/dimension-task.prompt.md` with prompt-file frontmatter
    and `${input:name:placeholder}` fields for model, entity, seed, natural key,
    surrogate key, included and excluded attributes, and a reference model.
    Give it a slash name distinct from the step 03 skill.
 2. Refer to the step 01 instructions instead of copying their stable rules.
 3. Create this step's `prompt.md` with the prompt-file slash invocation and the
    concrete values below, in the order requested by the input fields.
-4. Add a pending run record and a solution containing complete snapshots of all
-   changed text files. Exclude the solution from its own snapshot.
+4. Consult the supplied `solution.md` as needed. Keeping personal observations
+   in a `run-result.md` on your run branch is optional, not an acceptance requirement.
 5. Do not submit the prompt or run dbt during preparation.
 
 ## Inputs
@@ -45,11 +49,13 @@ skill.
 
 ## Manual Run
 
-On the run branch, invoke the prompt file in a fresh VS Code Copilot chat and
-fill in each requested value. Make sure the scoped instruction file is available,
-and record in References whether it was included. Capture the generated files,
-actual command, exit code, and full output in `run-result.md` after you perform
-the run.
+After preparing the files on your run branch, open a fresh VS Code Copilot chat.
+Send the slash-command message with concrete task values as shown in `prompt.md`;
+do not assume separate input boxes will appear. Confirm the prompt file is
+available in Agent Customizations and inspect References for the scoped
+instruction file. References show inclusion, not that every rule was followed.
+Review the generated SQL/YAML and actually run the focused dbt validation
+described in the shared instructions. Keeping notes about these checks is optional.
 
 ## Acceptance Checks
 
