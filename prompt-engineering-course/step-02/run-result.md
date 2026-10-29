@@ -8,7 +8,7 @@ the focused DuckDB build and key tests passed. Whether this interaction met the
 fresh-chat criterion was not independently verified. Agent Customizations and
 response References were not inspected, so instruction discovery is unverified.
 
-- Run branch: `Example-01-step-02-run`.
+- Demo branch: `Example-01-step-02-demo`.
 - Source: `Example-01-step-02-solution`.
 - Invocation record: `prompt-engineering-course/step-02/prompt.md`.
 - VS Code prompt file: `.github/prompts/dimension-task.prompt.md`.
