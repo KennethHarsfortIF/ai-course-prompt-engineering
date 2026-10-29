@@ -1,34 +1,17 @@
+# Prompt Engineering Course
 
-dbt-dimensional-modelling is a clone of https://github.com/Data-Engineer-Camp/dbt-dimensional-modelling.git
+Hands-on exercises using GitHub Copilot to build AdventureWorks dimension models
+with dbt and DuckDB. The course progresses from standalone prompts to reusable
+instructions, parameterized prompt files, and agent skills.
 
+The dbt example is based on
+[Data Engineer Camp's dimensional modelling project](https://github.com/Data-Engineer-Camp/dbt-dimensional-modelling).
 
-# If script execution is disabled on the pc run this:
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+## Setup
 
-# Create virtual environment
-python -m venv .venv
+For participant PC setup instructions, follow [Getting Started](gettingstarted.md).
 
-# Activate it
-.\\.venv\Scripts\Activate.ps1
-
-# Upgrade pip
-python -m pip install --upgrade pip
-# Install requirements
-python -m pip install -r requirements.txt
-
-
-# Check that dbt is working.
-cd dbt-dimensional-modelling\adventureworks\
-dbt deps\
-mkdir target\
-dbt debug\
-dbt seed\
-dbt run
-
-# check that duckdb cli is working
-duckdb target\adventureworks.duckdb -c "SELECT date_day, prior_date_day, day_of_month, day_of_year FROM date.date LIMIT 5;"
-
-# Reset the DuckDB database
+## Reset the DuckDB Database
 
 Close any DuckDB connections and activate the virtual environment first.
 From the repository root, run:
