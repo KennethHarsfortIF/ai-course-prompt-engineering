@@ -8,13 +8,18 @@ This solution prepares course materials only. No prompt, skill, model, or dbt bu
 |---|---|---|
 | Updated | `prompt-engineering-course/step-01/exercise.md` | Assignment and branch workflow |
 | Added | `prompt-engineering-course/step-01/prompt.md` | Dimension task with a shared-instructions reference |
-| Added | `prompt-engineering-course/step-01/run-result.md` | Pending evidence record for the run branch |
+| Optional template | `prompt-engineering-course/step-01/run-result.md` | Suggested personal notes; not a supplied or required file |
 | Moved | `.github/instructions/adventureworks-dimensions.instructions.md` | Reusable dimension conventions, moved from `prompt-engineering-course/step-01/instruction.md` |
 
 The sections below contain the complete prepared contents of every added or
 updated text file. The moved instruction is shown at its destination;
 inherited unchanged files are not repeated. This solution document is excluded
 from its own snapshot to avoid recursive self-embedding.
+The optional notes template is separate from these file snapshots.
+
+Work on `Example-01-step-01-run`, initially identical to the start branch.
+Use the solution branch for prepared instructions and the task prompt, and the
+demo branch for a completed example with generated models and validation results.
 
 ## prompt-engineering-course/step-01/exercise.md
 
@@ -23,8 +28,8 @@ from its own snapshot to avoid recursive self-embedding.
 # Step 01 Exercise: Store Stable Rules as Instructions
 
 For a guided walkthrough, see [solution.md](solution.md). It includes the full
-prepared file contents; the run branch is where you capture real Copilot and
-validation evidence.
+prepared file contents. Use the run branch for your own work and the demo
+branch as a completed reference.
 
 ## Learning Goal
 
@@ -35,19 +40,23 @@ files; they are not a skill or an execution guarantee.
 ## Branches
 
 - Start: `Example-01-step-01-start`, from `Example-01-step-00-solution`.
-- Solution: `Example-01-step-01-solution`, from this branch.
-- Run: `Example-01-step-01-run`, from its solution.
+- Run: `Example-01-step-01-run` is your workspace, initially identical to start;
+   complete the exercise here.
+- Solution: `Example-01-step-01-solution` contains the prepared instructions
+   and task prompt as a reference.
+- Demo: `Example-01-step-01-demo` contains a completed example with generated
+   models and recorded validation results.
 
 ## Assignment
 
-1. Create `.github/instructions/adventureworks-dimensions.instructions.md`.
+1. On the run branch, create `.github/instructions/adventureworks-dimensions.instructions.md`.
    Scope it only to dimension SQL/YAML files under AdventureWorks marts.
 2. Move stable naming, seed reference, key, SQL/YAML, schema, and validation
    conventions there. Do not put `dim_store` values in the instructions.
 3. Write `prompt.md` with only the dimension task details and a reference to
    those instructions. Keep stable rules out of this prompt.
-4. Add `run-result.md` and a `solution.md` with complete contents of changed
-   files, excluding the solution from its own snapshot.
+4. Consult the supplied `solution.md` as needed. Keeping personal observations
+   in a `run-result.md` on your run branch is optional, not an acceptance requirement.
 5. Do not ask Copilot to make the model or run dbt during preparation.
 
 ## Demonstrate Instruction Use
@@ -56,10 +65,12 @@ On the run branch, use a fresh VS Code Copilot chat and submit the task prompt.
 Afterward, inspect the response's **References** to see whether the instruction
 file was included. References prove inclusion, not that every rule was followed.
 Check generated code against conventions the short prompt did not spell out.
+Review the generated SQL/YAML and actually run the focused dbt validation
+described in the shared instructions.
 
 If the instruction is absent, verify the selected chat harness and that
 `applyTo` matches the SQL/YAML files Copilot creates. You can attach the file
-manually for comparison, but record that as a manual attachment rather than
+manually for comparison, but treat that as a manual attachment rather than
 evidence of automatic matching.
 
 ## Acceptance Checks
@@ -84,44 +95,23 @@ from the `store` seed. Use `businessentityid` as the natural key and
 references. Create the model SQL and YAML and validate the requested model.
 ```
 
-## prompt-engineering-course/step-01/run-result.md
+## Optional Run Notes
 
-<!-- file: prompt-engineering-course/step-01/run-result.md -->
-```text no-final-newline
-# Step 01 Run Record
+Keeping a personal run record is optional, not an acceptance requirement. If
+useful, create `prompt-engineering-course/step-01/run-result.md` on your run
+branch using this template. No run-record file is supplied by the solution.
 
-## Status
+<!-- optional-template: prompt-engineering-course/step-01/run-result.md -->
+```text
+# Step 01 Optional Run Notes
 
-**Not executed.** This branch is ready for your manual Copilot run. No model
-files, assistant response, dbt command, or build result are present.
+## Observations
 
-- Run branch: `Example-01-step-01-run`.
-- Source: `Example-01-step-01-solution`.
-- Task prompt: `prompt-engineering-course/step-01/prompt.md`.
-- Expected future files: `models/marts/dim_store.sql` and
-  `models/marts/dim_store.yml` in the AdventureWorks project.
-
-## Instruction Evidence
-
-Use the intended VS Code Copilot harness in a fresh chat. After submitting the
-task, expand **References** under the response and record whether
-`.github/instructions/adventureworks-dimensions.instructions.md` is listed.
-That shows whether the file was included in the request; it does not prove
-Copilot followed every rule. Compare the generated key order, tests,
-descriptions, references, and scope against the instruction file.
-
-If you manually attach the instruction file, record that separately from
-automatic `applyTo` application. If missing, inspect the selected harness,
-customization discovery, and Agent Debug Logs.
-
-## Build Evidence
-
-After the manual run, record the exact prompt/context, complete response, full
-generated SQL/YAML, dbt build command, exit code, and full output. Note any
-failures, fixes, and reruns. Do not mark the build successful until it passes.
-
-No prompt or build was run during course preparation. Do not carry generated
-files into later solution/start branches.
+- Instruction inclusion observed, not observed, or inconclusive:
+- Automatic matching or manual attachment:
+- Generated model review:
+- Validation command and actual outcome:
+- Errors, fixes, or questions:
 ```
 
 ## .github/instructions/adventureworks-dimensions.instructions.md
