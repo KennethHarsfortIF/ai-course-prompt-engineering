@@ -7,7 +7,7 @@ YAML already existed and met the prompt and dimension conventions. Copilot
 made no model changes and validated the existing implementation. This run
 demonstrates inspection and validation, not fresh model generation.
 
-- Run branch: `Example-01-step-01-run`.
+- Demo branch: `Example-01-step-01-demo`.
 - Source: `Example-01-step-01-solution`.
 - Task prompt: `prompt-engineering-course/step-01/prompt.md`.
 - Project directory: `dbt-dimensional-modelling/adventureworks`.
