@@ -2,7 +2,22 @@
 
 This solution prepares course materials only. No prompt, skill, model, or dbt build was executed.
 
-The following blocks are complete verbatim copies of every changed text payload introduced by this step, including its start-branch exercise. Inherited unchanged files are not repeated. This solution document is excluded from its own snapshot to avoid recursive self-embedding.
+## File Index
+
+| Status | File | Purpose |
+|---|---|---|
+| Updated | `prompt-engineering-course/step-00/exercise.md` | Learning goal, branch workflow, and run instructions |
+| Added | `prompt-engineering-course/step-00/prompt.md` | Self-contained dimension task prompt |
+| Optional template | `prompt-engineering-course/step-00/run-result.md` | Suggested personal notes; not a supplied or required file |
+
+The sections below contain the complete prepared contents of every added or
+updated text file. Inherited unchanged files are not repeated. This solution
+document is excluded from its own snapshot to avoid recursive self-embedding.
+The optional notes template is separate from these file snapshots.
+
+Work on `Example-01-step-00-run`, initially identical to the start branch.
+Use the solution branch for the prepared prompt and the demo branch for a
+completed example with generated models and recorded validation results.
 
 ## prompt-engineering-course/step-00/exercise.md
 
@@ -10,16 +25,39 @@ The following blocks are complete verbatim copies of every changed text payload 
 ```text no-final-newline
 # Step 00 Exercise: Try the Prompt
 
-Use the provided prompt to ask AI to create the `dim_store` model, then try
-building it with dbt.
+For a guided walkthrough, see [solution.md](solution.md). It includes the full
+prepared prompt. Use the run branch for your own work and the demo branch as
+a completed reference.
 
-1. Switch to the `Example-01-step-00-run` branch.
-2. Copy the full prompt from `prompt-engineering-course/step-00/prompt.md` into
-   your AI chat and send it. Let the AI create the model and try the build.
-3. If needed, run `dbt build --select dim_store` from
-   `dbt-dimensional-modelling/adventureworks` to see whether the model builds.
-   Record what happened in `run-result.md`, including any errors. Only mark the
-   build successful if it actually succeeds.
+## Learning Goal
+
+Try a detailed, self-contained prompt that combines the task with project
+conventions, then review the generated dimension and validate it with dbt.
+
+## Branches
+
+- Start: `Example-01-step-00-start` is the untouched exercise baseline.
+- Run: `Example-01-step-00-run` is your workspace, initially identical to start;
+  complete the exercise here.
+- Solution: `Example-01-step-00-solution` is the reference answer containing the
+  prepared prompt.
+- Demo: `Example-01-step-00-demo` is a completed example with generated models
+  and recorded validation results.
+
+## Assignment
+
+1. Review `solution.md` for the complete prepared prompt.
+2. On the run branch, prepare `prompt-engineering-course/step-00/prompt.md`
+  using the solution as needed, then submit it in an AI chat.
+3. Review generated SQL/YAML, then run `dbt build --select dim_store` from `dbt-dimensional-modelling/adventureworks`.
+4. Optionally keep a `run-result.md` on your run branch with observations,
+  validation output, and any fixes.
+
+## Acceptance Checks
+
+- The prompt includes the task details and reusable project conventions.
+- Review the generated SQL/YAML and actual dbt build output.
+- Only claim success if the build passes.
 ```
 
 ## prompt-engineering-course/step-00/prompt.md
@@ -61,38 +99,20 @@ dim_customer.sql / dim_customer.yml files in that folder. Then run dbt build for
 new model and show me the result.
 ```
 
-## prompt-engineering-course/step-00/run-result.md
+## Optional Run Notes
 
-<!-- file: prompt-engineering-course/step-00/run-result.md -->
-```text no-final-newline
-# Step 00 Run Record
+Keeping a personal run record is optional, not an acceptance requirement. If
+useful, create `prompt-engineering-course/step-00/run-result.md` on your run
+branch using this template. No run-record file is supplied by the solution.
 
-## Status
+<!-- optional-template: prompt-engineering-course/step-00/run-result.md -->
+```text
+# Step 00 Optional Run Notes
 
-**Not executed.** This run branch is intentionally prepared for a manual Copilot
-run. No prompt has been submitted, no files generated, and no dbt command or
-build result recorded.
+## Observations
 
-- Run branch: `Example-01-step-00-run`.
-- Source: `Example-01-step-00-solution`.
-- Prompt: `prompt-engineering-course/step-00/prompt.md`.
-- Project directory: `dbt-dimensional-modelling/adventureworks`.
-- Expected future model files: `models/marts/dim_store.sql` and
-  `models/marts/dim_store.yml`.
-
-## Manual Evidence to Capture
-
-Submit the exact prompt in a fresh Copilot chat. Record the date, assistant
-response, generated files in full, actual dbt command, exit code, and complete
-build output. Include failures and any fixes or reruns. Do not infer that the
-build passed merely because the model files look correct.
-
-Check the installed dbt environment, packages, local DuckDB profile, and seeded
-`sales.store` before the run. The original prompt's command is retained
-verbatim; use the project-local profiles path or set `DBT_PROFILES_DIR` if needed.
-Model selection will not seed missing source data.
-
-Keep generated files and evidence only on this run branch. Later steps start
-from solution branches, not this run.
+- Request and response summary:
+- Validation command and actual outcome:
+- Errors, fixes, or questions:
 ```
 
