@@ -9,7 +9,7 @@ after retrying with the repository virtual environment and local DuckDB profile.
 This run verifies the existing implementation and build, not fresh model
 generation from the prompt.
 
-- Run branch: `Example-01-step-00-run`.
+- Demo branch: `Example-01-step-00-demo`.
 - Source: `Example-01-step-00-solution`.
 - Prompt: `prompt-engineering-course/step-00/prompt.md`.
 - Project directory: `dbt-dimensional-modelling/adventureworks`.
