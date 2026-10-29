@@ -137,6 +137,21 @@ The nested `dbt-dimensional-modelling\requirements.txt` belongs to that
 subproject and pins a different set of versions. For the repository setup
 described here, install from the root `requirements.txt` as shown above.
 
+## Readiness Checklist
+
+Before the course, confirm:
+
+- [ ] The project's `.venv` is active, and `python` uses its Python executable.
+- [ ] The pip or uv dependency check above reports no broken requirements.
+- [ ] `dbt debug --profiles-dir .` succeeds from the AdventureWorks project.
+- [ ] dbt packages, including `dbt_utils`, are installed.
+
+
+Before each generation exercise, use the assigned `Example-01-step-NN-run`
+branch and check that `models/marts/dim_store.sql` and `dim_store.yml` are not
+already present in the AdventureWorks project. If they exist, ask the instructor
+before deleting or overwriting any work.
+
 To leave the environment when you are done, run:
 
 ```powershell
