@@ -8,7 +8,7 @@ instructions, found that the existing dimension already matched the request,
 and validated it using `.venv`. No SQL or YAML changes were needed. The focused
 build succeeded with exit code `0`: one table model and four passing key tests.
 
-- Run branch: `Example-01-step-03-run`.
+- Demo branch: `Example-01-step-03-demo`.
 - Recorded source: `Example-01-step-03-solution`.
 - Request source: `prompt-engineering-course/step-03/prompt.md`, with the
 	additional `.venv` requirement reproduced below.
