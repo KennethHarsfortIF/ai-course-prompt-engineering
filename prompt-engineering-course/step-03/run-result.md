@@ -2,59 +2,118 @@
 
 ## Status
 
-**Not executed.** The ordinary-language request has not been submitted. No
-automatic skill loading, model output, assistant response, dbt command, exit
-code, or build result is recorded. Redesigning these materials is not a run.
+**Executed on 2026-10-29.** The ordinary-language request was submitted without
+an explicit skill invocation. The assistant read the skill and shared
+instructions, found that the existing dimension already matched the request,
+and validated it using `.venv`. No SQL or YAML changes were needed. The focused
+build succeeded with exit code `0`: one table model and four passing key tests.
 
 - Run branch: `Example-01-step-03-run`.
-- Source: `Example-01-step-03-solution`.
-- Exact request: `prompt-engineering-course/step-03/prompt.md`.
+- Recorded source: `Example-01-step-03-solution`.
+- Request source: `prompt-engineering-course/step-03/prompt.md`, with the
+	additional `.venv` requirement reproduced below.
 - Skill: `.github/skills/create-dimension/SKILL.md`.
 - Replaced prompt: `.github/prompts/dimension-task.prompt.md` (removed here; retained on the start branch and in Step 02).
 - Instructions: `.github/instructions/adventureworks-dimensions.instructions.md`.
 
 ## Automatic Discovery Evidence
 
-Use a fresh VS Code Copilot chat on the run branch with workspace skills enabled.
-Submit the exact request without a slash command, skill attachment, or hint to
-use the skill. Do not use the chat that prepared these materials: it has already
-seen the skill and cannot demonstrate independent discovery.
+- Chat environment: VS Code Copilot on Windows. The skill was listed in the
+	available skills; workspace skill settings and fresh-chat provenance were
+	not independently verified.
+- Automatic skill loading: observed in the visible tool trace. The first
+	`multi_tool_use.parallel` call included `functions.read_file` for
+	`.github/skills/create-dimension/SKILL.md` and the shared dimension
+	instructions. The user did not name or attach the skill, use a slash command,
+	or ask the assistant to load it.
+- Shared instruction loading: observed in that same tool call. Subsequent reads
+	covered both `dim_customer` reference files, both existing `dim_store` files,
+	the project configuration, profile, and seed header.
+- Behavioral compliance: the SQL uses a `stg_store` CTE, `ref('store')`, explicit
+	columns, and `dbt_utils.generate_surrogate_key` over `businessentityid`.
+	Output columns are `store_key`, `businessentityid`, `storename`, and
+	`salespersonid`; `modifieddate` is excluded. The YAML describes every output
+	column and tests both keys for uniqueness and non-null values.
+- Starting file state and changes: the working tree was clean. Both dimension
+	files already matched the request, so no SQL/YAML files were generated or
+	edited. This run demonstrates loading and validation, not generation from
+	missing files.
+- Evidence location: the current Copilot conversation contains the request,
+	file-read tool trace, assistant response, and terminal output. No separate
+	screenshot was captured.
 
-After the actual run, replace these pending fields with observations:
+### Submitted Request
 
-- Chat environment and relevant skill settings: pending.
-- Exact request and captured response or screenshot location: pending.
-- Automatic skill loading: pending (observed / not observed / inconclusive).
-- References or tool trace showing skill loading, if available: pending.
-- Shared instruction loading and behavioral compliance: pending.
-- Generated SQL/YAML review and changed files: pending.
+```text
+Create `dim_store`, a dimension for `store`, from the `store` seed in
+`dbt-dimensional-modelling/adventureworks`. Use `businessentityid` as the
+natural key and `store_key` as the surrogate key. Include `storename` and
+`salespersonid`; exclude `modifieddate`. Use `dim_customer` as the structural
+reference for SQL and YAML.
 
-Correct model output does not prove skill loading. Missing visible evidence
-does not prove the skill was not loaded. Keep discovery, loading, compliance,
-and build results separate, and report inconclusive observations honestly.
+Use .venv environtment for dbt and duckdb commands.
+```
+
+### Captured Response Summary
+
+The assistant reported that both existing dimension files met the requirements,
+that no edits were needed, and that the `.venv` dbt build exited with code `0`
+with all four key tests passing.
+
+Visible file reads establish skill loading separately from model correctness.
+Independent fresh-chat discovery remains unverified.
 
 ## Optional Explicit Comparison
 
-If automatic loading is not observed, preserve that attempt and optionally use
-`/create-dimension` with the same inputs in a separate fresh chat. Record its
-request, starting file state, response, and results separately. Do not overwrite
-the first attempt's evidence or call explicit invocation automatic discovery.
+Not performed. No `/create-dimension` comparison was needed to establish the
+visible skill-loading observation. No explicit invocation is claimed.
 
 ## Validation Evidence
 
-After the manual run, record the actual focused dbt build command, exit code,
-and complete output, including failures, fixes, and reruns. If a source seed,
-package, or profile is unavailable, record the blocker; do not broaden the build
-or edit seeds to force a result.
+Prerequisite checks confirmed that `.venv/Scripts/python.exe`,
+`.venv/Scripts/dbt.exe`, and the installed `dbt_utils` package existed. A
+read-only DuckDB query using `.venv/Scripts/python.exe` confirmed the seed
+relation, returning `[('sales', 'store')]`.
 
-Preparation did not invoke the skill or execute dbt. Keep all generated files
-and evidence on this run branch only.
+The first build invocation used the same dbt arguments below, but the terminal
+returned no usable build output or explicit dbt exit status. That invocation's
+outcome was not established. The assistant reran the focused build with an
+explicit exit-status line; no model repair or broader build was performed.
 
-## Comparison with Step 02
+Actual captured PowerShell command, run from the workspace root:
 
-Step 02 explicitly selects a prompt with interactive input placeholders. Step 03
-replaces that file with a skill eligible for selection from a relevant request.
-Both mechanisms can express the task; both can be invoked manually. This example
-does not need both. Prompt files remain useful when their input UI or request-level
-agent, model, and tool configuration is wanted. A manually invoked text-only skill
-may otherwise provide little advantage over a prompt file.
+```powershell
+& { Push-Location 'C:\Users\HARKEA\ai-course-prompt-engineering\dbt-dimensional-modelling\adventureworks'; try { & 'C:\Users\HARKEA\ai-course-prompt-engineering\.venv\Scripts\dbt.exe' build --select dim_store --profiles-dir . --target duckdb; Write-Output "DBT_EXIT_CODE=$LASTEXITCODE" } finally { Pop-Location } }
+```
+
+Complete captured build output:
+
+```text
+07:01:40  Running with dbt=1.12.5
+07:01:41  Registered adapter: duckdb=1.11.0
+07:01:42  Found 9 models, 15 seeds, 46 data tests, 613 macros
+07:01:42
+07:01:42  Concurrency: 12 threads (target='duckdb')
+07:01:42
+07:01:42  1 of 5 START sql table model marts.dim_store ................................... [RUN]
+07:01:42  1 of 5 OK created sql table model marts.dim_store .............................. [OK in 0.18s]
+07:01:42  5 of 5 START test unique_dim_store_store_key ................................... [RUN]
+07:01:42  2 of 5 START test not_null_dim_store_businessentityid .......................... [RUN]
+07:01:42  4 of 5 START test unique_dim_store_businessentityid ............................ [RUN]
+07:01:42  3 of 5 START test not_null_dim_store_store_key ................................. [RUN]
+07:01:42  2 of 5 PASS not_null_dim_store_businessentityid ................................ [PASS in 0.15s]
+07:01:42  3 of 5 PASS not_null_dim_store_store_key ....................................... [PASS in 0.14s]
+07:01:42  4 of 5 PASS unique_dim_store_businessentityid .................................. [PASS in 0.14s]
+07:01:42  5 of 5 PASS unique_dim_store_store_key ......................................... [PASS in 0.17s]
+07:01:42
+07:01:42  Finished running 1 table model, 4 data tests in 0 hours 0 minutes and 0.67 seconds (0.67s).
+07:01:42
+07:01:42  Completed successfully
+07:01:42
+07:01:42  Done. PASS=5 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=5
+DBT_EXIT_CODE=0
+```
+
+Result: exit code `0`, table `marts.dim_store` built successfully, and all four
+tests passed. No seeds, profiles, packages, facts, other dimensions, or database
+reset scripts were changed or run to force the result.
