@@ -1,8 +1,8 @@
 # Step 00 Exercise: Try the Prompt
 
 For a guided walkthrough, see [solution.md](solution.md). It includes the full
-prepared file contents; the run branch is where you capture real AI and dbt
-results.
+prepared prompt. Use the run branch for your own work and the demo branch as
+a completed reference.
 
 ## Learning Goal
 
@@ -11,21 +11,25 @@ conventions, then review the generated dimension and validate it with dbt.
 
 ## Branches
 
-- Start: `Example-01-step-00-start` contains this exercise and walkthrough.
-- Solution: `Example-01-step-00-solution` adds the prepared prompt and pending
-  run record.
-- Run: `Example-01-step-00-run` is where you submit the prompt and record actual
-  output and validation evidence.
+- Start: `Example-01-step-00-start` is the untouched exercise baseline.
+- Run: `Example-01-step-00-run` is your workspace, initially identical to start;
+  complete the exercise here.
+- Solution: `Example-01-step-00-solution` is the reference answer containing the
+  prepared prompt.
+- Demo: `Example-01-step-00-demo` is a completed example with generated models
+  and recorded validation results.
 
 ## Assignment
 
-1. Review `solution.md` for the complete prepared prompt and run-record contents.
-2. On the run branch, submit `prompt-engineering-course/step-00/prompt.md` in an AI chat.
+1. Review `solution.md` for the complete prepared prompt.
+2. On the run branch, prepare `prompt-engineering-course/step-00/prompt.md`
+  using the solution as needed, then submit it in an AI chat.
 3. Review generated SQL/YAML, then run `dbt build --select dim_store` from `dbt-dimensional-modelling/adventureworks`.
-4. Record the response, files, command, exit code, output, and fixes in `run-result.md`; only claim success if the build passes.
+4. Optionally keep a `run-result.md` on your run branch with observations,
+  validation output, and any fixes.
 
 ## Acceptance Checks
 
 - The prompt includes the task details and reusable project conventions.
-- Generated files and run evidence remain on the run branch.
-- The run record distinguishes observed results from assumptions.
+- Review the generated SQL/YAML and actual dbt build output.
+- Only claim success if the build passes.
