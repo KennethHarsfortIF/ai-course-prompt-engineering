@@ -60,9 +60,13 @@ reference branches unchanged; do not reset or recreate them.
 ## Manual Run and Checks
 
 On the run branch, open a fresh VS Code Copilot chat with workspace skills
-enabled and submit the exact request from `prompt.md`. Do not preload the skill
-or mention it in the request. Inspect any available References or tool trace
-for evidence that `SKILL.md` was loaded.
+enabled. For the main test, submit only the complete request from the first
+fenced block in `prompt.md`, not its introduction or headings. Do not preload
+the skill or mention it in the request. Inspect any available References or
+tool trace for evidence that `SKILL.md` was loaded.
+
+Test the minimal and partial requests in separate fresh chats to observe how
+missing task details are handled. These do not replace the complete main test.
 
 Assess skill loading as observed, not observed, or inconclusive. Correct model
 output alone does not prove that the skill was used. If automatic loading is not
