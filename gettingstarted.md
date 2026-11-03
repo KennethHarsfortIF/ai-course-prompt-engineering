@@ -15,8 +15,32 @@ python --version
 python3 --version
 ```
 
-Use one command that works to create the environment in `.venv` (do not run all
-of these):
+To use a specific version, that version must already be installed. For example,
+`py -3.14` selects an installed Python 3.14; it does not install Python. Check
+whether it is available with:
+
+```powershell
+py -3.14 --version
+```
+
+If it is not installed and your Python install manager supports the `install`
+command, install it with:
+
+```powershell
+py install 3.14
+```
+
+If `py install` is unavailable, download Python 3.14 from
+[python.org](https://www.python.org/downloads/windows/) and choose the Windows
+installer.
+After installation, create the environment with:
+
+```powershell
+py -3.14 -m venv .venv
+```
+
+If you do not need to select a specific Python version, use one command that
+works to create the environment in `.venv` (do not run all of these):
 
 ```powershell
 py -m venv .venv
