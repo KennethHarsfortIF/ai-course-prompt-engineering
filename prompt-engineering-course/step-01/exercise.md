@@ -26,8 +26,7 @@ files; they are not a skill or an execution guarantee.
    Scope it only to dimension SQL/YAML files under AdventureWorks marts.
 2. Move stable naming, seed reference, key, SQL/YAML, schema, and validation
    conventions there. Do not put `dim_store` values in the instructions.
-3. Write `prompt.md` with only the dimension task details and a reference to
-   those instructions. Keep stable rules out of this prompt.
+3. Write `prompt.md` with only the dimension task details. Do not name, link, or attach the instruction file; keep stable rules out of this prompt to test automatic instruction matching.
 4. Consult the supplied `solution.md` as needed. Keeping personal observations
    in a `run-result.md` on your run branch is optional, not an acceptance requirement.
 5. Do not ask Copilot to make the model or run dbt during preparation.
@@ -35,6 +34,7 @@ files; they are not a skill or an execution guarantee.
 ## Demonstrate Instruction Use
 
 On the run branch, use a fresh VS Code Copilot chat and submit the task prompt.
+Do not explicitly reference or attach the instruction file in this main test.
 Afterward, inspect the response's **References** to see whether the instruction
 file was included. References prove inclusion, not that every rule was followed.
 Check generated code against conventions the short prompt did not spell out.
@@ -50,4 +50,5 @@ evidence of automatic matching.
 
 - Instructions cover only stable, reusable dimension guidance.
 - The task prompt is shorter and has no copied house-rule list.
+- The main test does not name, link, or attach the instruction file.
 - No generated model or build result is claimed before manual execution.
