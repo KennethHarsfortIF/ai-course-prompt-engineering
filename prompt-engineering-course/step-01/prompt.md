@@ -8,5 +8,3 @@ from the `store` seed. Use `businessentityid` as the natural key and
 `modifieddate`. Use `dim_customer.sql` and `dim_customer.yml` as structural
 references. Create the model SQL and YAML and validate the requested model.
 
-The [scoped AdventureWorks dimension instructions](../../.github/instructions/adventureworks-dimensions.instructions.md)
-contain the reusable project conventions for matching dimension files.
