@@ -7,7 +7,7 @@ This solution prepares course materials only. No prompt, skill, model, or dbt bu
 | Status | File | Purpose |
 |---|---|---|
 | Updated | `prompt-engineering-course/step-03/exercise.md` | Same-task comparison and branch workflow |
-| Added | `prompt-engineering-course/step-03/prompt.md` | Plain-language request for the manual run |
+| Added | `prompt-engineering-course/step-03/prompt.md` | Complete, minimal, and partial plain-language request examples |
 | Optional template | `prompt-engineering-course/step-03/run-result.md` | Suggested personal notes; not a supplied or required file |
 | Added | `.github/skills/create-dimension/SKILL.md` | Same dimension task, with values extracted from the request |
 | Deleted | `.github/prompts/dimension-task.prompt.md` | Replaced by the skill in the prepared solution and during the run assignment |
@@ -109,9 +109,13 @@ reference branches unchanged; do not reset or recreate them.
 ## Manual Run and Checks
 
 On the run branch, open a fresh VS Code Copilot chat with workspace skills
-enabled and submit the exact request from `prompt.md`. Do not preload the skill
-or mention it in the request. Inspect any available References or tool trace
-for evidence that `SKILL.md` was loaded.
+enabled. For the main test, submit only the complete request from the first
+fenced block in `prompt.md`, not its introduction or headings. Do not preload
+the skill or mention it in the request. Inspect any available References or
+tool trace for evidence that `SKILL.md` was loaded.
+
+Test the minimal and partial requests in separate fresh chats to observe how
+missing task details are handled. These do not replace the complete main test.
 
 Assess skill loading as observed, not observed, or inconclusive. Correct model
 output alone does not prove that the skill was used. If automatic loading is not
@@ -144,13 +148,38 @@ none guarantees the others.
 ## prompt-engineering-course/step-03/prompt.md
 
 <!-- file: prompt-engineering-course/step-03/prompt.md -->
-```text no-final-newline
+````text no-final-newline
+# Step 03 Prompt Examples
+
+Use these three requests to observe how the `create-dimension` skill handles
+complete and missing task details. Start a fresh Copilot chat for each test.
+
+## 1. Complete request
+
+```text
 Create `dim_store`, a dimension for `store`, from the `store` seed in
 `dbt-dimensional-modelling/adventureworks`. Use `businessentityid` as the
 natural key and `store_key` as the surrogate key. Include `storename` and
 `salespersonid`; exclude `modifieddate`. Use `dim_customer` as the structural
 reference for SQL and YAML.
 ```
+
+
+## 2. Minimal request
+
+```text
+Create a dimension.
+```
+
+
+## 3. Partial details
+
+```text
+Create `dim_store`, a dimension for `store`.
+```
+
+
+````
 
 ## Optional Run Notes
 
